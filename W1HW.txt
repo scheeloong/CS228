@@ -1,0 +1,109 @@
+1) Prior odds matter in determining whether you actually have the disease.
+
+P(Disease | Positive Test) = P(Positive Test | Disease) * P (Disease) / P (Positive Test)
+
+= .99 * 1/10000 / (9999/10000 * .01 + 1/10000 *.99) = 0.00980392156
+
+2) Since the system is markov, you only need to keep track of the last variable to determine the DP structure.
+
+Let DP[k][d] be the max(x1..xk) P(x1..xk, ******) for xk = d. Thus, DP is a n*m array. The transition is DP[k][d] =  max over d DP[k-1][d] + P(xk,d)
+
+n*m*m
+
+
+3) 3 cycle graph, where each node guarantees that the next node is the opposite of what you currently are. If 0/1, then you get a contradiction upon cycle
+
+
+
+4) 
+  1. P(A|B,Y) = P(A,B,Y) / P(B,Y)
+    P(A,B,Y) is unfindable because P(B,Y|A) can't be found without conditional independence
+  2. Yes, direct application of Bayes Rule
+  3. No, you can't ever figure out P(B,Y|A) because no independence
+
+
+  PART 2.
+
+  1. Yes, go through route 1 then find P(B,Y|A) through independence
+  2. Yes (obviously on part 1)
+  3. No, you can't find P(B,Y) ever because you can't seperate the given A away.
+
+
+5)
+  1a. A and B are independent (no common ancestors) .8*.3 = .24
+  1b. A has no effect on E (neither descendent nor acestory ) .7*.1 + .3*.9 = .34 (just conditions on B 0/1)
+
+  D-sep is independent, conditioned on
+  2a) No, because the graph can be decomposed to be A -> H <-E, so conditioning on H opens up a path from A to E.
+
+  2b) G and E are completely separate, and D gives no information at all on E.
+  2c) No, you can still take E to get infromation from B to H.
+
+
+6) 
+  1. 0.5 LOL
+  2. Admits must have between .5-1 on creativity and intelligence, otherwise, they wouldn't be able to make it up with the other stat.
+
+  THINK 
+
+  x-.5 = [0.5x^2-.5x][1,.5] = 0+.125 =  .625  
+  MAYBE WANT TO CHECK THIS CALCULATION
+
+
+  .5 + Integral .5-1, x-.5 = [0.5x^2-.5x][1,.5] = 0+.125 =  .625  
+
+  MAYBE WANT TO CHECK THIS CALCULATION
+
+
+  EV = Integral of P(x) * x
+  P(student) = 1/8 (area of square)
+
+
+  AHAHAHAHHA MATHI S HARD
+
+
+
+  3) (.55+1)/2 = 0.775 independent
+
+  4) 
+
+  OK, given you are admitted and I = 0.95, then your creativity ranges from .55 to 1 uniformly. Thus, it is 1.55/2 = .725
+
+  It should be lower than 2, because it locks at an instant, and this instant is higher.
+  WAIT IM SO CONFUSED
+
+7) Burgalary and EQ to John Call and MaryCall (4 connections)
+
+Explicit:
+
+If you want to remove node X.
+
+A -> B -> C ====> A -> C
+
+P(A,B,C) = P(A) * P(B|A) * P(C|B)
+
+
+For each child C of node X:
+  Calculate every possible input values from the parents of C:
+  For each possible value V of this child C:
+    
+
+If P(B=b|A=a), then P(C=c|A=a) = SUM_allb(P(C=c|b)*P(B=b|a))
+
+
+8a) You depend only on your parents and your children.
+
+
+
+8b) Do the hint exactly P(A,B) = P(A)*P(B|A), so the sample is exactly what you want
+Generate the parents first, then go down the chain (decompose the bayesian net)
+
+
+
+PROGRAMMING:
+
+1) 2^(28*28)
+2) 2^(28*28)-1, since you need a probability for every single vector - 1 since it sums to one.
+3) Z can take values from [-3, 3] stepping at .25 intervals -> [-12,12] at integer intervals = 25 different values. Thus, to specify each of Z1,Z2, you need (25-1)*2 = 48 parameters
+
+To specify each of X1-X784, you need P(0|Z) for all Z since P(1|Z) is just 1 - P(0|Z). Thus, you need 25*784 = 19600. Thus the answer is 19648.

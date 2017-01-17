@@ -1,0 +1,26 @@
+IMPORTANT RULE: X Independent Nondescendents | Parents
+
+Common Parent:
+Usually not independent. Fixing parent, makes it independent.
+
+Cascade:
+Usually not independent. Fixing middle, makes it independent. Note: (with just conditional indepence, it looks exactly like Common Parent, so its indistringuisable)
+
+V Structure:
+  A -> B <-C, A and C are indepenent usually, but conditioned on B they are coupled. This can be used to destroy possible graph structures. [explaining away]
+
+Active path is undirected path that connects two nodes and couples them. Use the above rules, and confirm that every triple satisfies the conditions. If no active path, they are conditionally independent. Reverse is not true.
+
+All non-active paths capture conditional independencies, but not all conditional independencies are captured in non active paths. [You can still have conditional indepencies built into the table (not on the strucutral level) based on numbers]
+
+Hidden Markov Models.
+
+Hidden State (Y) that varies through time. Observed state X that is emitted for each given state. States only depend on their immediate history.
+
+I-Map is an independence map, claims that any non active paths in the graph imply conditional independences in the underlying distribution through subset. Minimal I-map means every single edge is important (if you remove one edge it breaks)
+
+Perfect map is a map that captures all the dependencies in the distribution. Does not always exist, is not always unique. X->Y and Y->X look the same from this POV.
+
+I-equivalent graphs can't be distinguished through conditional independence. Any graph without V structures is I-equivalent. I-equivalent graphs must have the same skeleton (undirected edges). This makes sense because the active paths (sans V structures) is undirected. But even V structures have unique independence with pathing.
+
+If two graphs have the same skeleton and the same V structures, then they are I-equivalent.

@@ -1,0 +1,45 @@
+Notes:
+
+1/12
+
+In a complete distribution of n terms, there are 2^n possibilities, and you need 2^n-1 parameters to learn, since you can't rule anything out (you need everything to do it).
+
+If you assume independence, you only need N, for each of the variables, since each N actually gives you 2^(n-1) because it is true for all other distributions of the N-1 variables.
+
+Conditional independence between X and Y is P(X|Y,Z) = P(X|Y)
+Also a bunch of rules that you should be aware of if symbol pushing. Intuition behind |y, is to remove all |y and then work as usual.
+
+
+NAIVE BAYES:
+
+Assume all variables are conditionally independent given Y. (NOT PROPER USUALLY)
+
+Basic equation of Naive Bayes
+P(Y AND X) = P(Y) * SUM_OVER_ALL_X(P(X|Y))
+
+Inference
+P(Y|X) = P(X AND Y) / P(X)
+
+Top is basic equation
+Bottom is P(X) decomposed on Y
+
+Bayes net is a generalization of NAIVE BAYES with more than just Y being the parent of all the X's
+
+BAYES NET DEFINES A VALID PROBABILITY AND CAN SPECIFY ANY ARBITRARY PROBABILITY DISTRIBUTION
+
+Why? P(X) = SUM(P(X|PAR(X)))
+
+1) Positive is obvious because everything is positive
+2) Sum to one is by breaking down total probability into all of its parts
+
+Distributive law + algebra tells you that SUM AB = SUM A * SUM B
+
+Thus, you just break up the total sum of the parts, and then each part sums to one because each part is a normal conditional probability. Bayes net can be broken up anywhere conditionally. THIS IS KEY.
+
+QUIZ:
+
+1) AC
+2) Pairwise => Mutual for obvious reasons (just construct it)
+Mutual => Pairwise because you can break it up in any way and it will come to the right result. If one pair is not independent, break it there and the product won't result
+
+3) 
