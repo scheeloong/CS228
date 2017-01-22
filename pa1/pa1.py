@@ -105,10 +105,11 @@ def get_pixels_sampled_from_p_x_joint_z1_z2():
   return ans
 
 def prob_of_image(image):
+	pass
 
 def get_conditional_expectation(data):
 
-	#P(x|a) = P(x & a) / P(a)
+	pass
 
 
 
@@ -116,6 +117,11 @@ def q4():
   '''
   Plots the pixel variables sampled from the joint distribution as 28 x 28 images. Rest is TODO.
   '''
+
+  #mat = loadmat('q6.mat')
+  #val_data = mat['val_x']
+  #test_data = mat['test_x']
+
   plt.figure()
   for i in range(5):
       plt.subplot(1, 5, i+1)
@@ -162,10 +168,11 @@ def calculateProbability(image):
 				else:
 					prob *= (1.-ind_prob)
 			total += prob
-	return total
+	return math.log(total)
 
 def probCalculation(mask, prob):
-	return np.prod(np.select([mask, np.invert(mask)], [prob, 1-prob]))
+	#print (np.sum(np.log(np.select([mask, np.invert(mask)], [prob, 1.-prob]))) + 500.)
+	return (np.sum(np.log(np.select([mask, np.invert(mask)], [prob, 1.-prob]))) + 500.)
 
 def fastLogProb(image, probs, priors):
 
@@ -173,9 +180,10 @@ def fastLogProb(image, probs, priors):
 	total = 0.0
 
 	for i, prob in enumerate(probs):
-		total += (probCalculation(mask, prob) * priors[i])
+		total += math.exp(probCalculation(mask, prob) + math.log(priors[i]))
+		#print (total)
 
-	return total
+	return math.log(total) - 500.
 
 def q6():
   '''
@@ -199,12 +207,14 @@ def q6():
 			priors[counter] = get_p_z1(z1) * get_p_z2(z2)
 			counter = counter + 1
 
-  validation = np.empty([val_data.shape[0]])
-  #validation = np.empty([100])
+  #validation = np.empty([val_data.shape[0]])
+  validation = np.empty([100])
 
   for i, image in enumerate(val_data):
-  	validation[i] = math.log(fastLogProb(image, probs, priors))
-  	#print(fastLogProb(image, probs))
+  	if i > 99:
+  		break
+  	validation[i] = fastLogProb(image, probs, priors)
+  	#print(fastLogProb(image, probs, priors))
   	#print(calculateProbability(image))
   
   std = np.std(validation)
@@ -218,13 +228,14 @@ def q6():
   print "Starting test set"
 
   for i, image in enumerate(test_data):
-		prob = fastLogProb(image, probs)
+		prob = fastLogProb(image, probs, priors)
+		#print(prob)
 
-		if prob == 0:
-			corrupt_marginal_log_likelihood.append(LOW) # WHAT LOG EXP TRICK
-			continue
+		#if prob == 0:
+		#	corrupt_marginal_log_likelihood.append(LOW) # WHAT LOG EXP TRICK
+		#	continue
 
-		prob = math.log(prob)
+		#prob = math.log(prob)
 
 		if prob > low and prob < high:
 			real_marginal_log_likelihood.append(prob)
