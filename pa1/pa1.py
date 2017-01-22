@@ -9,7 +9,16 @@ Author: Aditya Grover
 import numpy as np 
 import matplotlib.pyplot as plt
 import pickle as pkl
+import math
+import pdb
 from scipy.io import loadmat
+
+eps = 10e-8
+
+def isZero(num):
+	if(abs(num)<eps):
+		return True
+	return False
 
 def plot_histogram(data, title='histogram', xlabel='value', ylabel='frequency', savefile='hist'):
   '''
@@ -73,10 +82,12 @@ def get_p_xk_cond_z1_z2(z1_val, z2_val, k):
   return bayes_net['cond_likelihood'][(z1_val, z2_val)][0, k-1]
 
 def get_p_x_cond_z1_z2(z1_val, z2_val):
-  '''
-  TODO
-  '''
-  pass
+  ans = np.array([])
+
+  for pixel in range(28*28):
+  	ans = np.append(ans, get_p_xk_cond_z1_z2(z1_val, z2_val, pixel))
+  
+  return ans
 
 def get_pixels_sampled_from_p_x_joint_z1_z2():
   
@@ -93,17 +104,18 @@ def get_pixels_sampled_from_p_x_joint_z1_z2():
   '''
   return ans
 
+def prob_of_image(image):
+
 def get_conditional_expectation(data):
-  '''
-  TODO
-  '''
-  pass
+
+	#P(x|a) = P(x & a) / P(a)
+
+
 
 def q4():
   '''
   Plots the pixel variables sampled from the joint distribution as 28 x 28 images. Rest is TODO.
   '''
-
   plt.figure()
   for i in range(5):
       plt.subplot(1, 5, i+1)
@@ -123,9 +135,9 @@ def q5():
 
   canvas = np.empty((28*len(disc_z1), 28*len(disc_z2)))
   for i, z1_val in enumerate(disc_z1):
-      for j, z2_val in enumerate(disc_z2):
-          canvas[(len(disc_z1)-i-1)*28:(len(disc_z2)-i)*28, j*28:(j+1)*28] = \
-          get_p_x_cond_z1_z2(z1_val, z2_val).reshape(28, 28)
+    for j, z2_val in enumerate(disc_z2):
+      canvas[(len(disc_z1)-i-1)*28:(len(disc_z2)-i)*28, j*28:(j+1)*28] = \
+    	get_p_x_cond_z1_z2(z1_val, z2_val).reshape(28, 28)
 
   plt.figure()        
   plt.imshow(canvas, cmap='gray')
@@ -136,6 +148,35 @@ def q5():
 
   return
 
+
+def calculateProbability(image):
+
+	total = 0.0
+	for z1 in disc_z1:
+		for z2 in disc_z2:
+			prob = get_p_z1(z1) * get_p_z2(z2)
+			for i, pixel in enumerate(image):
+				ind_prob = float(get_p_xk_cond_z1_z2(z1, z2, i))
+				if not isZero(pixel):
+					prob *= ind_prob
+				else:
+					prob *= (1.-ind_prob)
+			total += prob
+	return total
+
+def probCalculation(mask, prob):
+	return np.prod(np.select([mask, np.invert(mask)], [prob, 1-prob]))
+
+def fastLogProb(image, probs, priors):
+
+	mask = image.astype(bool)
+	total = 0.0
+
+	for i, prob in enumerate(probs):
+		total += (probCalculation(mask, prob) * priors[i])
+
+	return total
+
 def q6():
   '''
   Loads the data and plots the histograms. Rest is TODO.
@@ -144,16 +185,59 @@ def q6():
   mat = loadmat('q6.mat')
   val_data = mat['val_x']
   test_data = mat['test_x']
+  real_marginal_log_likelihood = []
+  corrupt_marginal_log_likelihood = []
 
-  '''
-  TODO
-  '''
+  probs = np.empty([625, 28*28])
+  priors = np.empty([625])
+  counter = 0
+
+  for z1 in disc_z1:
+		for z2 in disc_z2:
+
+			probs[counter] = get_p_x_cond_z1_z2(z1,z2)
+			priors[counter] = get_p_z1(z1) * get_p_z2(z2)
+			counter = counter + 1
+
+  validation = np.empty([val_data.shape[0]])
+  #validation = np.empty([100])
+
+  for i, image in enumerate(val_data):
+  	validation[i] = math.log(fastLogProb(image, probs, priors))
+  	#print(fastLogProb(image, probs))
+  	#print(calculateProbability(image))
   
-  plot_histogram(real_marginal_log_likelihood, title='Histogram of marginal log-likelihood for real data',
-       xlabel='marginal log-likelihood', savefile='a6_hist_real')
+  std = np.std(validation)
+  mean = np.mean(validation)
+  low = mean - 3*std
+  high = mean + 3*std
+  LOW = -650.
 
-  plot_histogram(corrupt_marginal_log_likelihood, title='Histogram of marginal log-likelihood for corrupted data',
-    xlabel='marginal log-likelihood', savefile='a6_hist_corrupt')
+  print std
+  print mean
+  print "Starting test set"
+
+  for i, image in enumerate(test_data):
+		prob = fastLogProb(image, probs)
+
+		if prob == 0:
+			corrupt_marginal_log_likelihood.append(LOW) # WHAT LOG EXP TRICK
+			continue
+
+		prob = math.log(prob)
+
+		if prob > low and prob < high:
+			real_marginal_log_likelihood.append(prob)
+		else:
+			corrupt_marginal_log_likelihood.append(prob)
+
+  print "OUTSIDE LOOP"
+  print(real_marginal_log_likelihood)
+  print(corrupt_marginal_log_likelihood)
+  
+  plot_histogram(real_marginal_log_likelihood, title='Histogram of marginal log-likelihood for real data', xlabel='marginal log-likelihood', savefile='a6_hist_real')
+
+  plot_histogram(corrupt_marginal_log_likelihood, title='Histogram of marginal log-likelihood for corrupted data', xlabel='marginal log-likelihood', savefile='a6_hist_corrupt')
 
   return
 
@@ -206,10 +290,10 @@ def main():
   '''
   TODO: Using the above Bayesian Network model, complete the following parts.
   '''
-  q4()
-  return
-  q5()
+  #q4()
+  #q5()
   q6()
+  return
   q7()
 
   return
