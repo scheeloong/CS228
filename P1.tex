@@ -142,11 +142,11 @@ P(X \mid S) = P(X \mid x1..xn)\], then have S be the parents of node X.
 
 \ss{8.1}
 
-Note that each node only depend on its parents and its descendents. Non descendents tell you nothing about yourself, and ancestors prior to parents are not useful given information about parents.
+Note that each node only depend on its parents and its children, and its children's parents [discussed in lecture].
 
 Thus, 
 
-\[ P(X \mid par(X), descend(X)) = \frac{P(X, par(X), descend(X))}{ P(par(X), descend(X))}
+\[ P(X \mid par(X), child(X), parchild(X)) = \frac{P(X, par(X), child(X), parchild(X)}{ P(par(X), child(X), parchild(X)}
 \]
 
 \ss{8.2}

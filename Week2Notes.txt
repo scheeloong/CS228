@@ -24,3 +24,14 @@ Perfect map is a map that captures all the dependencies in the distribution. Doe
 I-equivalent graphs can't be distinguished through conditional independence. Any graph without V structures is I-equivalent. I-equivalent graphs must have the same skeleton (undirected edges). This makes sense because the active paths (sans V structures) is undirected. But even V structures have unique independence with pathing.
 
 If two graphs have the same skeleton and the same V structures, then they are I-equivalent.
+
+
+Q: I'm not quite sure if I truly understand the difference between Perfect Maps/ I maps and representing everything in a probability distribution. Is it just able to sample, but not actually get the independencies correctly?
+
+
+
+Markov nets are undirected Bayesian nets. You can't represent all the independencies with Bayesian nets because of directedness and cycles. Thus, one strategy is to remove the directedness. In these nets, we have energies, which don't necessarily sum to 1, but just have to be normalized.
+
+Markov independence is just no path from A-B. Markov blanket for a set X is the set of nodes which cuts the set X off from the rest of the graph. The Markov blanket for a node in a Bayesian net, is its parents, children and children's parents. Parents and children are clear, and cut off the top and bottom of the graph. Children's parents block off the V structure which is the only other escape path.
+
+Markov blankets allow you to calculate probabilities locally, and normalize within.
