@@ -10,8 +10,6 @@
   \label{fig:net}
 \end{figure}}
 
-
-
 \documentclass[10pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
@@ -23,7 +21,7 @@
 \title{CS 228 Problem Set 1}
 \date{\today}
 \begin{document}
-
+\maketitle
 \P 1
 
 Prior odds matter when determining if you actually have a disease
@@ -112,26 +110,51 @@ False, there is a cascade from 	B to H.
 \ss{6.1}
 0.5
 \ss{6.2}
-TODO
+
+Drawing the probability density distribution for an admitted student with C on the X  axis and I on the Y axis, you get a triangle on the upper right corner with 1/8 the area of the entire unit square.
+
+Since $E[x] = \int P(x) * x $,
+
+\[
+\int_{.5}^{1} 8*(x-.5) * x = \frac{5}{6}
+\]
+
 \ss{6.3}
-$(.55+1)/2 = 0.775$
+0.5. Baseline nothing changes.
 \ss{6.4}
-Given you are admitted and $I = 0.95$, then your creativity ranges from .55 to 1 uniformly. Thus, it is $1.55/2 = .725$
+Given you are admitted and $I = 0.95$, then your creativity ranges from .55 to 1 uniformly. Thus, it is $1.55/2 = 0.775$
+
+You expect this number to be lower than the number for 2, since a higher intelligence requires a less high creativity score on average to be admitted as a student.
 
 \P 7
 \ss{7.1}
 \pic{Problem 7 Bayes Net}{Problem7BayesNet.jpg}
+
+You need a markov blanket on the removed node, which we establish in problem 8 as including the parents, children, and children's parents. The markov blanket isolates all conditional probabilities upon this node.
+
 \ss{7.2}
 
+Because you can't see the probabilities, you have to just go off of the network structure. This means that any valid network is originally a minimal I map since you can't remove any edge with possibly interfering with the underlying probability distribution.
 
+General gist is if you want to remove node X, for each child of X, add all the parents of X (removing duplicates). Then, topologically sort the children and connect them all to each other in a way that doesn't create a cycle. Then, for each child, draw a line from its parents to all other children in the graph.
 
-Because you can't see the probabilities, you have to just go off of the network structure. This means that any valid network is a minimal I map since you can't remove any edge with possibly interfering with the underlying probability distribution. TODO IS THIS RIGHT? BEC
+So the total update is:
 
-General gist is if you want to remove node X, for each child of X, add all the parents of X (removing duplicates). This works because you are "passing the information" from node X to its children. The exact probability update equation is:
+For all children of X: Incoming connections from each parent of X. Incoming connection from each child of X topologically sorted before it. Incoming connection from all parents of any fellow child. (removing duplicates of course).
 
-Let C be child of X. Let p1..pk be the parents of X. Let V be the set of possibile values of X
+All other nodes remain the same.
 
-\[P(C=c \mid p1\dots pk) = \sum_{v \in V} P(C=c \mid v)*P(X=v \mid p1\dots pk)\]
+I will now justify the three cases. The intuition is that you are creating a markov blanket. If you are removing X.
+
+Parents of X -> children of X. You need this because cascade allows information to flow.
+
+Children of X to other children of X. Usually, information flows between children of X. But if you don't have these new edges, and condition on all the new parents of X, the common parent information flow is blocked. But this is not true in the old graph. So you need these edges.
+
+Other parents of the children of X to other children of X. This one seems odd, but you seem to need this. If you condition on all the children of X, information in the old graph flows from all parents to otehr parents based on V strucutres. However, in the new graph without this edge, there is no V structure and the cascade is blocked.
+
+All other nodes should be unaffected because this forms a markov blanket.
+
+Indeed, there are extraneous dependencies, like having the other parents of the children of X always be connected to all the children of X, which is not true on the original graph, but this is OK because an I map only cares that you contain the set of independencies.
 
 If I misread the problem, and you indeed can see the probability distributions for each node X, then you need pick the smallest set S such that
 
@@ -142,12 +165,17 @@ P(X \mid S) = P(X \mid x1..xn)\], then have S be the parents of node X.
 
 \ss{8.1}
 
-Note that each node only depend on its parents and its children, and its children's parents [discussed in lecture].
+Alright, let's try factoring the graph.
 
-Thus, 
+\begin{align*}
+& P(X_i \mid restofgraph) = \frac{P(X_1 \dots X_n)}{\sum_{i} P(X_1 \dots i \dots X_n)}
+\\
+& = \frac{P(X_i \mid par(X_i)) * \prod P(child(X_i) \mid par(child(X_i))) * restofgraph}{\sum_{v \in val(x_i)} (P(X_i = v\mid par(X_i)) * \prod P(child(X_i) \mid par(child(X_i))) * restofgraph) }
+\\
+& = \frac{P(X_i \mid par(X_i)) * \prod P(child(X_i) \mid par(child(X_i)))}{\sum_{v \in val(x_i)} (P(X_i = v \mid par(X_i)) * \prod P(child(X_i) \mid par(child(X_i)))) }
+\end{align*}
 
-\[ P(X \mid par(X), child(X), parchild(X)) = \frac{P(X, par(X), child(X), parchild(X)}{ P(par(X), child(X), parchild(X)}
-\]
+Thus, you can just compute your desired probability by just looking at the probabilities of yourself and your children, and locally normalizing. The rest of the graph cancels out because it has nothing to do with i, and thus you can pull it out of the sum and cancel it out.
 
 \ss{8.2}
 
@@ -155,8 +183,47 @@ Do the hint exactly, pretty much. Notice that
 \[ P(A,B) = P(A)*P(B \mid A)\].
 
 Decompose the Bayesian net into something like 
-\[P(A) * P(B) * P(C \mid A,B) \dots\]
+\[P(A) * P(B) * P(C \mid A,B) \dots\] using a topological sort.
+
+So the full equation is:
+\[
+\prod_{i=1}^{n} P(x_i \mid par(x_i))
+\]
 
 Then go down and generate the net by first generating the parents, then their children using their values, until you have generated the whole net.
+
+\P 9
+
+\ss{9.1}
+\[
+2^{28*28}
+\]
+
+\ss{9.2}
+\[
+2^{28*28} - 1
+\]
+Requires one less than 9.1 because you need a probability for every vector, but you know the distribution sums to one, so you can save one parameter.
+
+\ss{9.3}
+
+Z can take values from [-3, 3] stepping at .25 intervals, which implies [-12,12] at integer intervals = 25 different values. Thus, to specify each of Z1, Z2, you need $(25-1)*2 = 48$ parameters
+\pb
+To specify each of $X_1 \dots X_{784}$, you need $P(0 \mid Z_1, Z_2)$ for all $Z_1, Z_2$ since $P(1 \mid Z_1, Z_2) = 1 - P(0 \mid Z_1, Z_2)$]. Thus, you need $ 25*25*28*28 = 490000$. Thus the answer is $490000 + 48 = 490048$
+
+\ss{9.4}
+\pic{Sampled images}{pa1/CORRECTa4.png}
+
+\ss{9.5}
+\pic{Role of $Z_1$ and $Z_2$}{pa1/CORRECTa5.png}
+
+It seems that the x axis controls whether you are round or linish, while the y axis controls the degree / number of attributes.
+
+\ss{9.6}
+\pic{Corrupted Test Images}{pa1/CORRECTa6Corrupt.png}
+\pic{Valid Test Images}{pa1/CORRECTa6Real.png}
+
+\ss{9.7}
+\pic{Scatter plot}{pa1/CORRECTa7.png}
 
 \end{document}
