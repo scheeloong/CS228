@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  24 JAN 2017 23:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  3 FEB 2017 16:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**P1.tex
-(./P1.tex
+**hw2.tex
+(./hw2.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
@@ -471,24 +471,8 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-) (./P1.aux
-
-LaTeX Warning: Label `fig:net' multiply defined.
-
-
-LaTeX Warning: Label `fig:net' multiply defined.
-
-
-LaTeX Warning: Label `fig:net' multiply defined.
-
-
-LaTeX Warning: Label `fig:net' multiply defined.
-
-
-LaTeX Warning: Label `fig:net' multiply defined.
-
-)
-\openout1 = `P1.aux'.
+) (./hw2.aux)
+\openout1 = `hw2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 23.
 LaTeX Font Info:    ... okay on input line 23.
@@ -503,7 +487,7 @@ LaTeX Font Info:    ... okay on input line 23.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 23.
 LaTeX Font Info:    ... okay on input line 23.
 LaTeX Font Info:    Try loading font information for OT1+lmr on input line 23.
- (/usr/local/texlive/2016/texmf-dist/tex/latex/lm/ot1lmr.fd
+(/usr/local/texlive/2016/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -600,130 +584,41 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 24.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 29.
+(Font)              <10> on input line 32.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 29.
+(Font)              <7> on input line 32.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 29.
+(Font)              <5> on input line 32.
+ [1
 
-Underfull \hbox (badness 10000) in paragraph at lines 37--40
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 43--46
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 48--51
-
- []
-
-[1
-
-{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 90--91
-
- []
-
-[2] <Problem7BayesNet.jpg, id=21, 4047.12pt x 3035.34pt>
-File: Problem7BayesNet.jpg Graphic file (type jpg)
-
-<use Problem7BayesNet.jpg>
-Package pdftex.def Info: Problem7BayesNet.jpg used on input line 131.
-(pdftex.def)             Requested size: 345.0pt x 258.71838pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[3] [4 <./Problem7BayesNet.jpg>]
-Overfull \hbox (26.8785pt too wide) in paragraph at lines 176--176
-[] 
- []
-
-[5]
-Underfull \hbox (badness 10000) in paragraph at lines 210--213
-
- []
-
-<pa1/CORRECTa4.png, id=32, 454.5783pt x 104.7915pt>
-File: pa1/CORRECTa4.png Graphic file (type png)
- <use pa1/CORRECTa4.png>
-Package pdftex.def Info: pa1/CORRECTa4.png used on input line 215.
-(pdftex.def)             Requested size: 345.0pt x 79.53203pt.
-
-<pa1/CORRECTa5.png, id=34, 354.123pt x 338.9463pt>
-File: pa1/CORRECTa5.png Graphic file (type png)
- <use pa1/CORRECTa5.png>
-Package pdftex.def Info: pa1/CORRECTa5.png used on input line 218.
-(pdftex.def)             Requested size: 345.0pt x 330.236pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<pa1/CORRECTa6Corrupt.png, id=35, 421.3341pt x 328.8285pt>
-File: pa1/CORRECTa6Corrupt.png Graphic file (type png)
-
-<use pa1/CORRECTa6Corrupt.png>
-Package pdftex.def Info: pa1/CORRECTa6Corrupt.png used on input line 223.
-(pdftex.def)             Requested size: 345.0pt x 269.2648pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<pa1/CORRECTa6Real.png, id=36, 421.3341pt x 328.8285pt>
-File: pa1/CORRECTa6Real.png Graphic file (type png)
-
-<use pa1/CORRECTa6Real.png>
-Package pdftex.def Info: pa1/CORRECTa6Real.png used on input line 224.
-(pdftex.def)             Requested size: 345.0pt x 269.2648pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-<pa1/CORRECTa7.png, id=37, 383.031pt x 302.0886pt>
-File: pa1/CORRECTa7.png Graphic file (type png)
- <use pa1/CORRECTa7.png>
-Package pdftex.def Info: pa1/CORRECTa7.png used on input line 227.
-(pdftex.def)             Requested size: 345.0pt x 272.11229pt.
-
-
-LaTeX Warning: `!h' float specifier changed to `!ht'.
-
-[6 <./pa1/CORRECTa4.png>] [7 <./pa1/CORRECTa5.png>] [8 <./pa1/CORRECTa6Corrupt.
-png> <./pa1/CORRECTa6Real.png>] [9 <./pa1/CORRECTa7.png>] (./P1.aux)
-
-LaTeX Warning: There were multiply-defined labels.
-
- ) 
+{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] (./
+hw2.aux) ) 
 Here is how much of TeX's memory you used:
- 2807 strings out of 493014
- 36782 string characters out of 6133351
- 97218 words of memory out of 5000000
- 6276 multiletter control sequences out of 15000+600000
+ 2772 strings out of 493014
+ 36090 string characters out of 6133351
+ 98171 words of memory out of 5000000
+ 6250 multiletter control sequences out of 15000+600000
  39734 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,9n,24p,363b,225s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/lo
-cal/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/20
-16/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2016/texmf-d
-ist/fonts/enc/dvips/lm/lm-mathit.enc}</usr/local/texlive/2016/texmf-dist/fonts/
-type1/public/lm/lmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
-ic/lm/lmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi
-10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></us
-r/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/tex
-live/2016/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2016/t
-exmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2016/texmf-dist/f
-onts/type1/public/lm/lmr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
-public/lm/lmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lm
-r7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/local/te
-xlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on P1.pdf (9 pages, 2091492 bytes).
+ 37i,9n,24p,235b,199s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/loca
+l/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2016
+/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/local/texlive/2016/texmf-dis
+t/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
+pe1/public/lm/lmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
+/lm/lmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi5.
+pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texliv
+e/2016/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2016/texm
+f-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2016/texmf-dist/font
+s/type1/public/lm/lmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/lm/lmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy
+7.pfb>
+Output written on hw2.pdf (2 pages, 144158 bytes).
 PDF statistics:
- 102 PDF objects out of 1000 (max. 8388607)
- 66 compressed objects within 1 object stream
+ 59 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 31 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
