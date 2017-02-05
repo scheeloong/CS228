@@ -82,14 +82,14 @@ class NBClassifier(object):
 
   def __init__(self, A_train, C_train):
     self.num_examples = A_train.shape[0]
-    self.smooth = A_train.shape[1]
+    self.smooth = A_train.shape[1]/10
     num_cols = A_train.shape[1]
 
-    self.a_ones = np.ones(num_cols)
-    self.y_on_0 = np.zeros(num_cols)
-    self.y_on_1 = np.zeros(num_cols)
+    self.a_ones = np.ones(num_cols)/10
+    #self.y_on_0 = np.zeros(num_cols)
+    #self.y_on_1 = np.zeros(num_cols)
     self.a_given_0 = np.zeros(num_cols)
-    self.a_given_1 = np.ones(num_cols)
+    self.a_given_1 = np.ones(num_cols)/10
     self.num_y = 0.
     self.num_0 = 0.
 
@@ -121,7 +121,7 @@ class NBClassifier(object):
     total_log_prob += math.log(cond_prob)
     total_log_prob -= math.log(cond_prob + bot_neg)
 
-    print(total_log_prob)
+    #print(total_log_prob)
 
     if total_log_prob > self.limit:
       return (1, total_log_prob)
@@ -140,7 +140,6 @@ class NBClassifier(object):
     assignment in a tuple, e.g. return (c_pred, logP_c_pred)
 
     '''
-    pass
     #return (c_pred, logP_c_pred)
 
 
@@ -190,8 +189,67 @@ class TANBClassifier(NBClassifier):
   '''
   TANB classifier class specification
   '''
+  num_examples = 0.
+  num_a = 0.
+  tree = None
+  par = None # par[x] is the non y parent of x. -1 if none
+  chil = None # child[x] is list of children of 
+  a_given = None # a_given[0][1][x][b] means if y is 0 and parent is 1 number of times node x is b
+  num_y_a = None # num_y_a[0][x][0] means number of times y is 0 and a_x is 0
+  num_y = None
+  topo = None
+
+
+  def toposort(self):
+    vis = [False] * self.num_a
+
+    self.topo = [self.root]
+    vis[self.root] = True
+    
+    for x in range(self.num_a):
+      for i in range(self.num_a):
+        if not vis[i] and vis[self.par[i]]:
+          vis[i] = True
+          self.topo.append(i)
+          break
+
+  def _learn(self, arr, y, x):
+    parent = 0 if self.par[x] == -1 else arr[self.par[x]]
+    self.a_given[y][parent][x][arr[x]]+=1.
+    #self.num_y_a[y][x][arr[x]]+=1
+
+    for child in self.chil[x]:
+      self._learn(arr, y, child)
 
   def __init__(self, A_train, C_train):
+
+    self.num_examples = A_train.shape[0]
+    self.num_a = A_train.shape[1]
+    self.tree = get_mst(A_train, C_train)
+    self.par = [-1] * self.num_a
+    self.chil = [[] for i in range(self.num_a)]
+    self.a_given = np.zeros(shape=[2,2,self.num_a,2])
+    self.num_y = [0., 0.]
+
+    self.root = get_tree_root(self.tree)
+    for dad, kid in get_tree_edges(self.tree, self.root):
+      self.par[kid] = dad
+      self.chil[dad].append(kid)
+
+    for i in range(A_train.shape[0]):
+      arr = A_train[i,:]
+      y = C_train[i]
+
+      self._learn(arr, y, self.root)
+      self.num_y[y] += 1.
+
+    self.toposort()
+
+    #print(self.num_y)
+    # print(self.num_examples)
+
+    # FIND AN ORDERING TO LOOP THROUGH
+
     '''
     TODO create any persistent instance variables you need that hold the
     state of the trained classifier and populate them with a call to
@@ -202,41 +260,41 @@ class TANBClassifier(NBClassifier):
           the class labels of the rows in A
 
     '''
-    raise NotImplementedError()
-
-
-  def _train(self, A_train, C_train):
-    '''
-    TODO train your TANB classifier with the specified data and class labels
-    hint: learn the parameters for the required CPTs
-        - A_train: a 2-d numpy array where each row is a sample of
-          assignments 
-        - C_train: a 1-d n-element numpy where the elements correspond to
-          the class labels of the rows in A
-    hint: you will want to call functions imported from tree.py:
-        - get_mst(): build the mst from input data
-        - get_tree_root(): get the root of a given mst
-        - get_tree_edges(): iterate over all edges in the rooted tree.
-          each edge (a,b) => a -> b
-    '''
-    pass
 
   def classify(self, entry):
-    '''
-    TODO return the log probabilites for class == 0 and class == 1 as a
-    tuple for the given entry
-    - entry: full assignment of variables 
-    e.g. entry = np.array([0,1,1]) means variable A_0 = 0, A_1 = 1, A_2 = 1
 
-    NOTE: this class inherits from NBClassifier and it is possible to
-    write this method in NBClassifier, such that this implementation can
-    be removed
+    total_log_prob = 0.0
+    cond_prob = self.num_y[1]/self.num_examples
+    bot_neg = 1.- cond_prob
+    #print(cond_prob)
+    #print(bot_neg)
 
-    NOTE this must return both the predicated label {0,1} for the class
-    variable and also the log of the conditional probability of this
-    assignment in a tuple, e.g. return (c_pred, logP_c_pred)
-    '''
-    pass
+    for val in self.topo:
+    #val = 0
+
+      parent = self.par[val]
+      entry_val = entry[parent] if parent != -1 else 0
+      cond_prob *= (self.a_given[1][entry_val][val][entry[val]] + alpha) / \
+        (self.a_given[1][entry_val][val][0] + self.a_given[1][entry_val][val][1] + self.num_a*alpha)
+
+      bot_neg *= (self.a_given[0][entry_val][val][entry[val]] + alpha) / \
+        (self.a_given[0][entry_val][val][0] + self.a_given[0][entry_val][val][1] + self.num_a*alpha)
+
+    #print(self.a_given)
+
+    #print(cond_prob)
+    #print(bot_neg)
+    total_log_prob += math.log(10000 * cond_prob)
+    total_log_prob -= math.log(10000* cond_prob + 10000* bot_neg)
+
+    #pdb.set_trace()
+
+    #print(total_log_prob)
+
+    if total_log_prob > self.limit:
+      return (1, total_log_prob)
+    else:
+      return (0, math.log(1. - math.exp(total_log_prob)))
 
 # load all data
 A_base, C_base = load_vote_data()
@@ -312,17 +370,17 @@ def main():
   TODO modify or add calls to evaluate() to evaluate your implemented
   classifiers
   '''
+  
   print 'Naive Bayes'
   accuracy, num_examples = evaluate(NBClassifier, train_subset=False)
   print '  10-fold cross validation total test accuracy {:2.4f} on {} examples'.format(
     accuracy, num_examples)
 
-  return
-
   print 'TANB Classifier'
   accuracy, num_examples = evaluate(TANBClassifier, train_subset=False)
   print '  10-fold cross validation total test accuracy {:2.4f} on {} examples'.format(
     accuracy, num_examples)
+  return
 
   print 'Naive Bayes Classifier on missing data'
   evaluate_incomplete_entry(NBClassifier)
