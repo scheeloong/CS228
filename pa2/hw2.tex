@@ -1,6 +1,10 @@
 \def\s{\section*}
 \def\ss{\subsection*}
+\def\sp{\hspace{3 mm}}
 \def\ind{\!\perp\!\!\!\perp}
+\def\m{\mid}
+\def\nl{ \\ = \sp &}
+\newcommand{\eq}[1]{\begin{align*}&{#1}\end{align*}}
 \renewcommand{\ss}[1]{\subsection*{#1}}
 \renewcommand{\P}[1]{\s{Problem #1}}
 \def\ra{\rightarrow}
@@ -32,7 +36,7 @@
 
 You can't differentiate parts without V structures.
 
-\ss{1.1}
+\ss{1.3}
 
 We got this by moralizing the Bayesian net. This is not a perfect map because $B \ind D$ but it doesn't appear that way on the Markov network. In general, moralizing doesn't give you perfect maps.
 
@@ -76,8 +80,8 @@ A has two parents (C and D).
 \begin{align*}
 & P(A=0 \mid C=0 , D=0) = \frac{P(A=0, C=0, D=0)}{P(C=0, D=0)} = \frac{\frac{1}{8}}{\frac{1}{8} + \frac{1}{8}} = \frac{1}{2} \\
 & P(A=0 \mid C=1 , D=0) = 0 \\
-& P(A=0 \mid C=0 , D=1) = 0 \\
-& P(A=0 \mid C=1 , D=1) = \frac{1/4}{1/4} = 1
+& P(A=0 \mid C=0 , D=1) = \frac{1/4}{1/4} = 1 \\
+& P(A=0 \mid C=1 , D=1) = 0
 \end{align*}
 B has two parents (A and D). 
 \begin{align*}
@@ -115,11 +119,25 @@ Notice that the observed units form a markov blanket on any given hidden unit (l
 
 \ss{3.3}
 
+We want to calculate $\sum_v e^{\phi(v,h)}$
+
 Notice that you can rewrite
 
-\[
-\sum_h P(h,v) = \sum_h P(h,v)
-\]
+\begin{align*}
+& \sum_h e^{\phi(v,h)}
+\nl Z * \sum_h P(h,v) \nl Z* \sum_{h_1} \dots \sum_{h_n} P(h \mid v) * P(v) \nl Z* P(v) * \sum_{h_1} \dots \sum_{h_n} \prod_{h_i} P(h_i \mid v)
+\nl Z* P(v) * \sum_{h_1} P(h_1 \mid v) \dots \sum_{h_n} P(h_n \mid v) 
+\end{align*}
+
+We can clearly calculate each of the $P(h_i \mid v)$ as per above, so the only problem left is how to calculate $Z* P(v)$
+Notice also that through some manipulation of Bayes rule for ANY h
+
+\begin{align*}
+& Z*P(v) = Z*\frac{P(v,h)}{P(h \mid v)}
+\nl Z* \frac{ \frac{1}{Z}\phi(v,h)}{\prod_i P(h_i \m v)} \nl \frac{ \phi(v,h)}{\prod_i P(h_i \m v)}
+\end{align*}
+
+Note that $\phi(v,h)$ is easily computed, as is $P(h_i, v)$ as per above. Thus, we are done!
 
 \ss{3.4}
 
@@ -174,22 +192,22 @@ Then, for the final step we realize that we are marginalizing over P, and can th
 
 \ss {5.1}
 
-Test error rate: 0.9138
+Test error rate: 0.0862
 
 \ss {5.2}
 
-Test error rate: 0.9569
+Test error rate: 0.0431
 
 \ss {5.3}
 
 \[ P (Democrat \mid votes) = 0.9999986 \]
-\[ P (educationvote=1 \mid votes) = 0.100840336134 \]
+\[ P (educationvote=1 \mid votes) = 0.10084 \]
 
 \ss {5.4}
 
-Naive Bayes error rate on smaller data: 0.9052
-TANB error rate on smaller data: 0.8836
+Naive Bayes error rate on smaller data: 0.0948
+TANB error rate on smaller data: 0.1164
 
-Since TANB is a more complex model and we trained on a much smaller amount of data, it is possible that TANB overfit the data and thus is not as good as a simple model.
+Since TANB is a more complex model and we trained on a much smaller amount of data, TANB probably did not have time to truly fit the all the P(child | result, parent) tables all the way, since many of them were not in the dataset, and left them to their initialized value (after smoothing) to 50%.
 
 \end{document}
