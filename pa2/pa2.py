@@ -82,14 +82,13 @@ class NBClassifier(object):
 
   def __init__(self, A_train, C_train):
     self.num_examples = A_train.shape[0]
-    self.smooth = A_train.shape[1]/10
     num_cols = A_train.shape[1]
 
-    self.a_ones = np.ones(num_cols)/10
+    self.a_ones = np.zeros(num_cols)/10
     #self.y_on_0 = np.zeros(num_cols)
     #self.y_on_1 = np.zeros(num_cols)
     self.a_given_0 = np.zeros(num_cols)
-    self.a_given_1 = np.ones(num_cols)/10
+    self.a_given_1 = np.zeros(num_cols)/10
     self.num_y = 0.
     self.num_0 = 0.
 
@@ -115,8 +114,8 @@ class NBClassifier(object):
     bot_neg = 1.- cond_prob
 
     for i, val in enumerate(entry):
-      cond_prob *= self.a_given_1[i]/self.num_y if val == 1 else (1.-(self.a_given_1[i]/self.num_y))
-      bot_neg *= self.a_given_0[i]/self.num_0 if val == 1 else (1.-(self.a_given_0[i]/self.num_0))
+      cond_prob *= (self.a_given_1[i]+alpha)/(16*alpha+self.num_y) if val == 1 else (1.-(self.a_given_1[i]+alpha)/(16*alpha+self.num_y))
+      bot_neg *= (self.a_given_0[i]+alpha)/(16*alpha+self.num_0) if val == 1 else (1.-(self.a_given_0[i]+alpha)/(16*alpha+self.num_0))
 
     total_log_prob += math.log(cond_prob)
     total_log_prob -= math.log(cond_prob + bot_neg)
@@ -261,7 +260,36 @@ class TANBClassifier(NBClassifier):
 
     '''
 
-  def classify(self, entry):
+  def shuffle(self, entry):
+    total_prob = 0.0
+    missing = np.where(entry==-1)[0]
+    s = 0.0
+
+    print "PROB OF EDUC"
+    print (self.a_given[1][entry[self.par[11]]][11][1] + self.a_given[0][entry[self.par[11]]][11][1])/ \
+          ((self.a_given[1][entry[self.par[11]]][11][1] + self.a_given[0][entry[self.par[11]]][11][1]) + \
+          (self.a_given[1][entry[self.par[11]]][11][0] + self.a_given[0][entry[self.par[11]]][11][0]))
+
+    for i in range(32):
+      prob = 1.0
+      for j in range(5):
+
+        rep = missing[j]
+
+        num = 1 if 1<<j & i else 0
+        entry[rep] = num
+        prob *= (self.a_given[1][entry[self.par[rep]]][rep][num])/ \
+          (self.a_given[1][entry[self.par[rep]]][rep][1]+self.a_given[1][entry[self.par[rep]]][rep][0])
+
+      res, log_prob = self.classify(entry,True)
+
+      real_prob = math.exp(log_prob) if res == 1 else 1-math.exp(log_prob)
+      s+=prob
+      total_prob += real_prob*prob
+
+    return total_prob
+
+  def classify(self, entry, printer=False):
 
     total_log_prob = 0.0
     cond_prob = self.num_y[1]/self.num_examples
@@ -283,13 +311,15 @@ class TANBClassifier(NBClassifier):
     #print(self.a_given)
 
     #print(cond_prob)
-    #print(bot_neg)
-    total_log_prob += math.log(10000 * cond_prob)
-    total_log_prob -= math.log(10000* cond_prob + 10000* bot_neg)
+    #if printer:
+      #print(bot_neg)
+      #print(cond_prob)
+    total_log_prob += math.log(cond_prob)
+    total_log_prob -= math.log(cond_prob + bot_neg)
 
     #pdb.set_trace()
 
-    #print(total_log_prob)
+    #print(math.exp(total_log_prob))
 
     if total_log_prob > self.limit:
       return (1, total_log_prob)
@@ -359,9 +389,12 @@ def evaluate_incomplete_entry(classifier_cls):
   # load incomplete entry 1
   entry = load_incomplete_entry()
 
-  c_pred, logP_c_pred = classifier.classify(entry)
 
-  print '  P(C={}|A_observed) = {:2.4f}'.format(c_pred, np.exp(logP_c_pred))
+
+
+  prob = classifier.shuffle(entry)
+
+  print '  P(C={}|A_observed) = {:2.7f}'.format(1, prob)
 
   return
 
@@ -380,13 +413,22 @@ def main():
   accuracy, num_examples = evaluate(TANBClassifier, train_subset=False)
   print '  10-fold cross validation total test accuracy {:2.4f} on {} examples'.format(
     accuracy, num_examples)
-  return
 
-  print 'Naive Bayes Classifier on missing data'
-  evaluate_incomplete_entry(NBClassifier)
+  #print 'Naive Bayes Classifier on missing data'
+  #evaluate_incomplete_entry(NBClassifier)
 
   print 'TANB Classifier on missing data'
   evaluate_incomplete_entry(TANBClassifier)
+
+  print 'Naive Bayes'
+  accuracy, num_examples = evaluate(NBClassifier, train_subset=True)
+  print '  10-fold cross validation total test accuracy {:2.4f} on {} examples'.format(
+    accuracy, num_examples)
+
+  print 'TANB Classifier'
+  accuracy, num_examples = evaluate(TANBClassifier, train_subset=True)
+  print '  10-fold cross validation total test accuracy {:2.4f} on {} examples'.format(
+    accuracy, num_examples)
 
 if __name__ == '__main__':
   main()

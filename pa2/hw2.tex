@@ -28,6 +28,14 @@
 
 \P 1
 
+\pic{Problem 1}{Problem1.JPG}
+
+You can't differentiate parts without V structures.
+
+\ss{1.1}
+
+We got this by moralizing the Bayesian net. This is not a perfect map because $B \ind D$ but it doesn't appear that way on the Markov network. In general, moralizing doesn't give you perfect maps.
+
 \P 2
 
 \ss{2.1.1}
@@ -55,7 +63,7 @@ There is only one possible I map for this. We can deduce this as following.
 
 Since $C \ind D$, we can deduce that it must be a V structure, since no other group of 3 can have independence without conditioning on anything. Thus, the arrow goes from C to A and D to A. Continuining on this, $C \not \ind B$, we can further deduce there is NOT a v strucutre, so the arrow goes from A to B, completing a cascade. From this, we can then conclude the final arrow goes from D to B, otherwise there would be a cycle and its not a DAG. Thus, this I-map is unique.
 
-If the underlying graph G is correct, then this will be the perfect map (unique I-map).
+If the underlying map G is correct, then this is a perfect map since it is unique.
 
 \ss{2.3}
 C has no parents. 
@@ -83,26 +91,35 @@ B has two parents (A and D).
 
 \ss{3.1}
 
-Notice that the observed units form a markov blanket on any given hidden unit. Thus, we can compute $ P (h_i \mid v) $ without caring about the rest of the hidden units.
-
 \begin{align*}
-& P (h_i \mid v) = \frac {P (h_i, v)}{\sum_{h_k} P(h_k, v)} = \frac {\sum_{h_1 \dots h_{k-1}, h_{k+1} \dots h_n} P (h_k, v, h_1 \dots h_{k-1}, h_{k+1} \dots h_n)}{\sum_{h_1 \dots h_n} P(h, v)} \\
-= & 
+& P (h_i \mid v) = \frac {P (h_i, v)}{\sum_{h_k} P(h_k, v)} \\
+= \hspace{3 mm}&\frac {\sum_{h_1 \dots h_{k-1}, h_{k+1} \dots h_n} P (h_k, v, h_1 \dots h_{k-1}, h_{k+1} \dots h_n)}{\sum_{h_1 \dots h_n} P(h, v)} \\
+=  \hspace{3 mm} & \frac {\sum_{h_1 \dots h_{k-1}, h_{k+1} \dots h_n} e^{-\alpha^Tv-\beta^Th-v^TWh}}{\sum_{h_1 \dots h_n} e^{-\alpha^Tv-\beta^Th-v^TWh}}
 \end{align*}
 
-TODO CAN YOU BREAK THIS UP
+v's are constant, so they can be pulled out and cancelled. All h's except for $h_i$ are also all factorable out on both the top and can be cancelled too. This is not the most easy to see, but you can break the $e^{abc}$ up into products $e^ae^be^c$, and then factor the constants out of the sum. What's left is:
+
+\[
+\frac { e^{-\beta^T_ih_i-(v^TW)_ih_i}}{\sum_{h_1} e^{-\beta^T_ih_i-(v^TW)_ih_i}}
+\]
+
+This can be computed tractible. Just compute $v^TW$ and then summing over $h_1$ only requires two calculations since it is binary.
 
 \ss{3.2}
 
-\begin{align*}
-& P(h \mid v) = \frac{P(v,h)}{\sum_{i \in \{0,1\}^n} P(v,i)} = \prod_{h_i} \frac{P(v,h_i)}{\sum_{h_k \in \{0,1\}} P(v,h_k)} = \prod_{h_i} P(h_i \mid v)
-\end{align*}
+Notice that the observed units form a markov blanket on any given hidden unit (look at the structure of the Restricted Bolzmann Machine. Thus, we can compute $ P (h_i \mid v) $ independently as above, then multiply them all together.
 
-Since the hidden units are all independent conditioned on the observed units, we can just factor the probabilities that way.
+\begin{align*}
+& P(h \mid v) = \prod_{h_i} P(h_i \mid v)
+\end{align*}
 
 \ss{3.3}
 
-Notice that you can rewrite 
+Notice that you can rewrite
+
+\[
+\sum_h P(h,v) = \sum_h P(h,v)
+\]
 
 \ss{3.4}
 
@@ -110,7 +127,7 @@ This is equivalent to 3.3, because h and v are symmetrical.
 
 \ss{3.5}
 
-I think not. You can factor such that for either sum on h or v you can compute that, but after that you can't factor the sum again.
+I think not. Papers seem to indicate it is not so easy, and the factoring methods we used above don't work.
 
 
 \P 4
