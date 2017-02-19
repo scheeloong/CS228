@@ -64,7 +64,7 @@ def encodeMessage(x, G):
     return np.mod(np.dot(G, x), 2)
 
 
-def constructClusterGraph(yhat, H, p):
+def constructClusterGraph(yhat, H, p, flip):
     '''
     :param - yhat: observed codeword
     :param - H parity check matrix
@@ -118,7 +118,7 @@ def constructClusterGraph(yhat, H, p):
             s = 0
             for i in index:
                 s += i
-            if s%2 == 1:
+            if s%2 == flip:
                 val[index] = 1.
 
         G.factor.append(Factor(None, scope, [2]*scope.size, (val)).normalize())
@@ -186,7 +186,7 @@ def do_part_c():
     y = encodeMessage(x, G)
 
 
-    graph = constructClusterGraph(y, H, p)
+    graph = constructClusterGraph(y, H, p, 0)
 
     graph.runParallelLoopyBP(5)
 
@@ -222,7 +222,7 @@ def do_part_de(numTrials, p, iterations=50):
 
     y = encodeMessage(x, G)
 
-    graph = constructClusterGraph(y, H, p)
+    graph = constructClusterGraph(y, H, p, 0)
 
     X = np.arange(loops)
     ham = np.array(graph.runParallelLoopyBP(loops))
@@ -252,10 +252,10 @@ np.random.seed(10)
 #print('Doing part (a): Should see 0.0, 0.0, >0.0')
 #do_part_a()
 
-#print('Doing part (c)')
-#do_part_c()
-print('Doing part (d)')
-do_part_de(10, 0.06)
+print('Doing part (c)')
+do_part_c()
+#print('Doing part (d)')
+#do_part_de(10, 0.06)
 print('Doing part (e)')
 #do_part_de(10, 0.08)
 #do_part_de(10, 0.10)

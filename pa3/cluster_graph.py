@@ -125,12 +125,14 @@ class ClusterGraph:
                         messages = self.messagesToFac[(nbr2, findex)] if messages == None else messages.multiply(self.messagesToFac[(nbr2, findex)])
                     total = fact if messages == None else fact.multiply(messages)
 
+                    print total.val
+                    print total.normalize().marginalize_all_but([nbr], "max").normalize().val
                     #print total.marginalize_all_but([nbr]).normalize().val
                     #print self.messagesToVar[(findex,nbr)].val
                     #print total.val
 
 
-                    mtv[(findex,nbr)] = total.marginalize_all_but([nbr]).normalize()
+                mtv[(findex,nbr)] = total.normalize().marginalize_all_but([nbr], "max").normalize()
                     #print mtv[(findex,nbr)].val
                     #print self.messagesToVar[(findex,nbr)].val
 
@@ -202,9 +204,6 @@ class ClusterGraph:
         for i,f in enumerate(self.factor):
             if var not in f.scope:
                 continue
-
-            #print i
-            #print self.messagesToVar[(i,var)].val
 
             output *= self.messagesToVar[(i,var)].normalize().val[1]
         return [1.-output, output]
