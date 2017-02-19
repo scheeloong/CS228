@@ -107,6 +107,33 @@ class NBClassifier(object):
 
     #pdb.set_trace()
 
+  def shuffle(self, entry):
+    total_prob = 0.0
+    missing = np.where(entry==-1)[0]
+    s = 0.0
+
+    print "PROB OF EDUC"
+    print (self.a_given_1[11] + self.a_given_0[11])/self.num_examples
+    return
+    for i in range(32):
+      prob = 1.0
+      for j in range(5):
+
+        rep = missing[j]
+
+        num = 1 if 1<<j & i else 0
+        entry[rep] = num
+        prob *= (self.a_given[1][entry[self.par[rep]]][rep][num])/ \
+          (self.a_given[1][entry[self.par[rep]]][rep][1]+self.a_given[1][entry[self.par[rep]]][rep][0])
+
+      res, log_prob = self.classify(entry,True)
+
+      real_prob = math.exp(log_prob) if res == 1 else 1-math.exp(log_prob)
+      s+=prob
+      total_prob += real_prob*prob
+
+    return total_prob
+
   def classify(self, entry):
 
     total_log_prob = 0.0
@@ -244,6 +271,16 @@ class TANBClassifier(NBClassifier):
 
     self.toposort()
 
+
+    for i in range(16):
+      #print "Variable " + str(i)
+      #print self.par[i]
+
+      for j in range(2):
+        for k in range(2):
+          pass
+          #print(self.a_given[1][j][i][k]/(self.a_given[1][j][i][0]+self.a_given[1][j][i][1]))
+
     #print(self.num_y)
     # print(self.num_examples)
 
@@ -297,15 +334,16 @@ class TANBClassifier(NBClassifier):
     #print(cond_prob)
     #print(bot_neg)
 
-    for val in self.topo:
+    for val in range(16):
     #val = 0
+      
 
       parent = self.par[val]
       entry_val = entry[parent] if parent != -1 else 0
       cond_prob *= (self.a_given[1][entry_val][val][entry[val]] + alpha) / \
         (self.a_given[1][entry_val][val][0] + self.a_given[1][entry_val][val][1] + self.num_a*alpha)
 
-      bot_neg *= (self.a_given[0][entry_val][val][entry[val]] + alpha) / \
+      bot_neg   *= (self.a_given[0][entry_val][val][entry[val]] + alpha) / \
         (self.a_given[0][entry_val][val][0] + self.a_given[0][entry_val][val][1] + self.num_a*alpha)
 
     #print(self.a_given)
@@ -417,8 +455,7 @@ def main():
   #print 'Naive Bayes Classifier on missing data'
   #evaluate_incomplete_entry(NBClassifier)
 
-  print 'TANB Classifier on missing data'
-  evaluate_incomplete_entry(TANBClassifier)
+  
 
   print 'Naive Bayes'
   accuracy, num_examples = evaluate(NBClassifier, train_subset=True)
@@ -429,6 +466,9 @@ def main():
   accuracy, num_examples = evaluate(TANBClassifier, train_subset=True)
   print '  10-fold cross validation total test accuracy {:2.4f} on {} examples'.format(
     accuracy, num_examples)
+
+  print 'TANB Classifier on missing data'
+  evaluate_incomplete_entry(TANBClassifier)
 
 if __name__ == '__main__':
   main()

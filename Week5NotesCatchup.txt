@@ -1,0 +1,25 @@
+Junction tree algorithm:
+
+Marginals = P(C)
+Conditions = P(C | A)
+
+Belief is the unnormalized probability. Junction tree is an undirected tree of cliques, that calculates all the marginals for you. You need two passes through the tree, because each node needs an input and an output, so each edge is used twice.
+
+Look up the 3 properties of junction tree:
+1) It's a tree
+
+Construct a clique tree:
+
+1) Variable Elimination
+
+So the rule is iteratively take out nodes, then make cliques with their neighbors. The reason you need to connect all parents, is because
+
+SUM OVER B of [phi(b,c) * phi(a,b)] = phi(a,c) (a new function on these variables)
+
+2) Triangulation
+
+Note that during variable elimination, you always connect the diagonal of squares of variables. Why? because you do this as soon as you remove on of the corners.
+
+Inspiration for triangulation. When you see polygons on the graph, make them triangles to turn them into 3-cliques. ALL THE POLYGONS, even the supersets. Then connect them based on if they share any variables.
+
+So this is one shot, to break everything down into 2-3 cliques. Note that this does NOT always turn out a tree. Weights of connections are based on how many variables you share. Then take the maximum spanning tree, to get a tree that you want

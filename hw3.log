@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  5 FEB 2017 22:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  11 FEB 2017 23:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**hw2.tex
-(./hw2.tex
+**hw3.tex
+(./hw3.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
@@ -474,8 +474,8 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-) (./hw2.aux)
-\openout1 = `hw2.aux'.
+) (./hw3.aux)
+\openout1 = `hw3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 30.
 LaTeX Font Info:    ... okay on input line 30.
@@ -586,50 +586,43 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 31.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<Problem1.JPG, id=1, 4047.12pt x 3035.34pt>
-File: Problem1.JPG Graphic file (type jpg)
- <use Problem1.JPG>
-Package pdftex.def Info: Problem1.JPG used on input line 35.
-(pdftex.def)             Requested size: 345.0pt x 258.71838pt.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <10> on input line 41.
+(Font)              <10> on input line 35.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <7> on input line 41.
+(Font)              <7> on input line 35.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 41.
+(Font)              <5> on input line 35.
  [1
 
-{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./Probl
-em1.JPG>]
-[2] [3] [4] [5] [6] (./hw2.aux) ) 
+{/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2] (./
+hw3.aux) ) 
 Here is how much of TeX's memory you used:
- 2791 strings out of 493014
- 36443 string characters out of 6133351
- 100265 words of memory out of 5000000
- 6264 multiletter control sequences out of 15000+600000
+ 2783 strings out of 493014
+ 36345 string characters out of 6133351
+ 96257 words of memory out of 5000000
+ 6258 multiletter control sequences out of 15000+600000
  39734 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,10n,24p,487b,223s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/
-dvips/lm/lm-mathsy.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/l
-m-rm.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{
-/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/local
-/texlive/2016/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2
-016/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2016/texmf-
-dist/fonts/type1/public/lm/lmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts
-/type1/public/lm/lmmi5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
-ic/lm/lmmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr10
-.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/
-local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texli
-ve/2016/texmf-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texlive/2016/texm
-f-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts
-/type1/public/lm/lmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pub
-lic/lm/lmsy5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy
-7.pfb>
-Output written on hw2.pdf (6 pages, 2420344 bytes).
+ 37i,8n,24p,354b,193s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/us
+r/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/te
+xlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2016
+/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/local/texlive/2016/texmf-dis
+t/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/ty
+pe1/public/lm/lmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
+/lm/lmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi5.
+pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texliv
+e/2016/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2016/texm
+f-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2016/texmf-dist/font
+s/type1/public/lm/lmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/lm/lmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy10
+.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/
+local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
+Output written on hw3.pdf (2 pages, 160368 bytes).
 PDF statistics:
- 80 PDF objects out of 1000 (max. 8388607)
- 57 compressed objects within 1 object stream
+ 67 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 6 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

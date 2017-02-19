@@ -104,7 +104,7 @@ B has two parents (A and D).
 v's are constant, so they can be pulled out and cancelled. All h's except for $h_i$ are also all factorable out on both the top and can be cancelled too. This is not the most easy to see, but you can break the $e^{abc}$ up into products $e^ae^be^c$, and then factor the constants out of the sum. What's left is:
 
 \[
-\frac { e^{-\beta^T_ih_i-(v^TW)_ih_i}}{\sum_{h_1} e^{-\beta^T_ih_i-(v^TW)_ih_i}}
+\frac { e^{-\beta^T_ih_i-(v^TW)_ih_i}}{1 + e^{-\beta_i-(v^TW)_i}}
 \]
 
 This can be computed tractible. Just compute $v^TW$ and then summing over $h_1$ only requires two calculations since it is binary.
@@ -129,7 +129,7 @@ Notice that you can rewrite
 \nl Z* P(v) * \sum_{h_1} P(h_1 \mid v) \dots \sum_{h_n} P(h_n \mid v) 
 \end{align*}
 
-We can clearly calculate each of the $P(h_i \mid v)$ as per above, so the only problem left is how to calculate $Z* P(v)$
+We can clearly calculate each of the $P(h_i \mid v)$ as per above in polynomial time, and together it is still polynomial, so the only problem left is how to calculate $Z* P(v)$
 Notice also that through some manipulation of Bayes rule for ANY h
 
 \begin{align*}
@@ -137,7 +137,7 @@ Notice also that through some manipulation of Bayes rule for ANY h
 \nl Z* \frac{ \frac{1}{Z}\phi(v,h)}{\prod_i P(h_i \m v)} \nl \frac{ \phi(v,h)}{\prod_i P(h_i \m v)}
 \end{align*}
 
-Note that $\phi(v,h)$ is easily computed, as is $P(h_i, v)$ as per above. Thus, we are done!
+Note that $\phi(v,h)$ is easily computed, as is $P(h_i, v)$ as per above. The Z magically cancels out. Thus, we are done!
 
 \ss{3.4}
 
@@ -208,6 +208,6 @@ Test error rate: 0.0431
 Naive Bayes error rate on smaller data: 0.0948
 TANB error rate on smaller data: 0.1164
 
-Since TANB is a more complex model and we trained on a much smaller amount of data, TANB probably did not have time to truly fit the all the P(child | result, parent) tables all the way, since many of them were not in the dataset, and left them to their initialized value (after smoothing) to 50%.
+Since TANB is a more complex model and we trained on a much smaller amount of data, TANB probably did not have time to truly fit the all the P(child | result, parent) tables all the way, since many of them were not in the dataset, and left them to their initialized value (after smoothing) to $50\%$.
 
 \end{document}
