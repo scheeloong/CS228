@@ -12,6 +12,7 @@ from cluster_graph import *
 from factors import *
 import pdb
 
+
 def loadLDPC(name):
     """
     :param - name: the name of the file containing LDPC matrices
@@ -92,7 +93,7 @@ def constructClusterGraph(yhat, H, p):
     for i in range(M):
         for j in range(N):
             if H[j][i] == 1:
-                G.nbr[i].append(j)
+                G.nbr[i].append(j+M) # because the parity check factors are above
 
     #insides = [[index] if index < M else np.where(H[index-M]==1)[0] for index in range(M+N)]
     G.sepset = [[[] for b in range(M+N)] for a in range(M+N)]
@@ -115,10 +116,10 @@ def constructClusterGraph(yhat, H, p):
             s = 0
             for i in index:
                 s += i
-            if s%2 == 0:
-                val[index] = 1
+            if s%2 == 1:
+                val[index] = 1.
 
-        G.factor.append(Factor(None, scope, [2]*scope.size, np.ndarray.flatten(val)))
+        G.factor.append(Factor(None, scope, [2]*scope.size, (val)).normalize())
 
     ##############################################################
     # To do: your code starts here
@@ -184,29 +185,58 @@ def do_part_c():
 
     graph = constructClusterGraph(y, H, p)
 
-    
 
-    graph.runParallelLoopyBP(1)
+    graph.runParallelLoopyBP(50)
+
+    print graph.factor[332].scope
+
+    print graph.messagesToVar[(332,0)].val
+
+
+    prob = graph.estimateMarginalProbability(0)
+    print str(prob[0]) + " " + str(prob[1]) + " " + str(y[0])
+    #return
+
+    prob = np.zeros(N)
+    X = np.arange(N)
 
     for i in range(N):
+        prob[i] = graph.estimateMarginalProbability(i)[1]
 
-        prob = graph.estimateMarginalProbability(i)
-        print str(prob[0]) + " " + str(prob[1]) + " " + str(y[i])
-
+    plt.plot(X, prob)
+    plt.show()
 
     ##############################################################
 
-def do_part_de(numTrials, error, iterations=50):
+def do_part_de(numTrials, p, iterations=50):
     '''
     param - numTrials: how many trials we repreat the experiments
     param - error: the transmission error probability
     param - iterations: number of Loopy BP iterations we run for each trial
     '''
+
+    loops = 10
     G, H = loadLDPC('ldpc36-128.mat')
+    N = G.shape[1]
+
     ##############################################################
     # To do: your code starts here
 
+    x = np.zeros((N, 1), dtype='int32')
+    ran = np.random.rand(N)
+    x[ran<p] = 1
 
+    y = encodeMessage(x, G)
+
+    graph = constructClusterGraph(y, H, p)
+
+    X = np.arange(loops)
+    ham = np.array(graph.runParallelLoopyBP(loops))
+
+    print ham
+
+    plt.plot(X, ham)
+    plt.show()
 
     ##############################################################
 
@@ -226,10 +256,10 @@ def do_part_fg(error):
 
 #print('Doing part (a): Should see 0.0, 0.0, >0.0')
 #do_part_a()
-print('Doing part (c)')
-do_part_c()
+#print('Doing part (c)')
+#do_part_c()
 print('Doing part (d)')
-#do_part_de(10, 0.06)
+do_part_de(10, 0.06)
 print('Doing part (e)')
 #do_part_de(10, 0.08)
 #do_part_de(10, 0.10)

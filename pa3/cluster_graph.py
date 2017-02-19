@@ -8,6 +8,7 @@
 from factors import *
 import numpy as np
 import pdb
+import matplotlib.pyplot as plt
 
 class ClusterGraph:
     def __init__(self, numVar=0):
@@ -36,6 +37,7 @@ class ClusterGraph:
         self.sepset = []
         self.messagesToVar = {}
         self.messagesToFac = {}
+        self.ham = []
     
     def evaluateWeight(self, assignment):
         '''
@@ -69,7 +71,7 @@ class ClusterGraph:
             inMsg = Factor()
             inMsg.scope = self.sepset[src][dst]
             inMsg.card = [len(self.domain[s]) for s in inMsg.scope]
-            inMsg.val = np.ones(np.prod(inMsg.card))
+            inMsg.val = np.ones(np.prod(inMsg.card))/2
             self.messages[(src, dst)] = inMsg
         return self.messages[(src, dst)]
 
@@ -93,40 +95,21 @@ class ClusterGraph:
         ###############################################################################
         # To do: your code here
 
-            # # UPDATE ALL THE MESSAGES INTO FACTORS VARIABLE INTO FACTOR NO SUMMING
-            # for findex, fact in enumerate(self.factor):
-
-            #     for var in range(self.numVar):
-
-            #         messages = None
-            #         friends = self.nbr[var]
-            #         for i, nbr in enumerate(friends):
-            #             messages = self.messagesToVar[(i, var)] if messages == None else messages.multiply(self.messagesToVar[(i, var)])
-            #         self.messagesToFac[(var,var)] = messages
-
-            #         for i, nbr in enumerate(friends):
-            #             messages = self.messagesToVar[(var,var)]
-            #             for b, nbr2 in enumerate(friends):
-            #                 if b == i:
-            #                     continue
-            #                 messages = messages.multiply(self.messagesToVar[(b,var)])
-            #             self.messagesToFac[(var,nbr)] = messages
-
-
-            #             self.messagesToFact[(var, findex)] = 
-
-            #     friends = fact.scope
-            #     messages = None
-            #     for i, nbr in enumerate(friends):
-            #         messages = self.messagesToVar[(var,var)] if messages == None else messages.multiply(self.messagesToVar[(b,var)])
-                   
-            #     self.messagesToFac[(var,nbr)] = messages
-
             # UPDATE ALL THE MESSAGES INTO VARIABLES
+
+            ans = 0
+            for i in range(self.numVar):
+                print self.estimateMarginalProbability(i)[0]
+                if self.estimateMarginalProbability(i)[0] < 0.5:
+                    ans += 1
+
+            self.ham.append(ans)
+
+            mtv = {}
+            mtf = {}
             for findex, fact in enumerate(self.factor):
 
                 messages = None
-
 
                 friends = fact.scope
                 for _, nbr in enumerate(friends):
@@ -138,10 +121,16 @@ class ClusterGraph:
                         if nbr2==nbr:
                             continue
                         messages = self.messagesToFac[(nbr2, findex)] if messages == None else messages.multiply(self.messagesToFac[(nbr2, findex)])
+                    total = fact if messages == None else fact.multiply(messages)
 
-                    total = fact if messages == None else messages.multiply(fact)
+                    #print total.marginalize_all_but([nbr]).normalize().val
+                    #print self.messagesToVar[(findex,nbr)].val
+                    #print total.val
 
-                    self.messagesToVar[(findex,nbr)] = total.marginalize_all_but([nbr])
+
+                    mtv[(findex,nbr)] = total.marginalize_all_but([nbr]).normalize()
+                    #print mtv[(findex,nbr)].val
+                    #print self.messagesToVar[(findex,nbr)].val
 
                 # for _, nbr in enumerate(friends):
                 #     messages = self.messagesToVar[(findex,findex)]
@@ -158,17 +147,24 @@ class ClusterGraph:
                 messages = None
                 friends = self.nbr[var]
                 for i, nbr in enumerate(friends):
-                    messages = self.messagesToVar[(i, var)] if messages == None else messages.multiply(self.messagesToVar[(i, var)])
-                self.messagesToFac[(var,var)] = messages
+                    messages = self.messagesToVar[(nbr, var)] if messages == None else messages.multiply(self.messagesToVar[(nbr, var)])
+                mtf[(var,var)] = messages.normalize()
 
                 for i, nbr in enumerate(friends):
                     messages = self.messagesToVar[(var,var)]
                     for b, nbr2 in enumerate(friends):
                         if b == i:
                             continue
-                        messages = messages.multiply(self.messagesToVar[(b,var)])
-                    self.messagesToFac[(var,nbr)] = messages
+                        messages = messages.multiply(self.messagesToVar[(nbr2,var)])
 
+                    mtf[(var,nbr)] = messages.normalize()
+
+            self.messagesToVar = mtv
+            self.messagesToFac = mtf
+
+
+
+        return self.ham
 
             # for s, src_fact in enumerate(self.factor):
             #     for d, dest_fact in enumerate(self.factor):
@@ -200,12 +196,23 @@ class ClusterGraph:
         ###############################################################################
         # To do: your code here 
 
-        everything = None
-        for friends in self.varToFac[var]:
-            message = self.messagesToVar[(friends,var)]
-            everything = message if everything == None else everything.multiply(message)
+        output = 1.0
+        for i,f in enumerate(self.factor):
+            if var not in f.scope:
+                continue
 
-        return [message.val[0], message.val[1]]
+            #print i
+            #print self.messagesToVar[(i,var)].val
+
+            output *= self.messagesToVar[(i,var)].normalize().val[1]
+        return [1.-output, output]
+
+        # everything = None
+        # for friends in self.varToFac[var]:
+        #     message = self.messagesToVar[(friends,var)]
+        #     everything = message if everything == None else everything.multiply(message)
+
+        # return [message.val[0], message.val[1]]
         
         
         ###############################################################################
