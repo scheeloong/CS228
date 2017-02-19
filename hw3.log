@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  11 FEB 2017 23:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  19 FEB 2017 11:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -599,11 +599,11 @@ hw3.aux) )
 Here is how much of TeX's memory you used:
  2783 strings out of 493014
  36345 string characters out of 6133351
- 96257 words of memory out of 5000000
+ 98257 words of memory out of 5000000
  6258 multiletter control sequences out of 15000+600000
  39734 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,8n,24p,354b,193s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,9n,24p,706b,193s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/us
 r/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/te
 xlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2016
@@ -619,7 +619,7 @@ s/type1/public/lm/lmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
 ic/lm/lmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy10
 .pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/
 local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on hw3.pdf (2 pages, 160368 bytes).
+Output written on hw3.pdf (2 pages, 167319 bytes).
 PDF statistics:
  67 PDF objects out of 1000 (max. 8388607)
  49 compressed objects within 1 object stream

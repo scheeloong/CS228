@@ -55,7 +55,7 @@ class ClusterGraph:
         inMsg = Factor()
         inMsg.scope = [var]
         inMsg.card = [2]
-        inMsg.val = np.ones(np.prod(inMsg.card))
+        inMsg.val = np.ones(np.prod(inMsg.card))/2
         return inMsg
 
     def getInMessage(self, src, dst):
@@ -206,8 +206,8 @@ class ClusterGraph:
             #print i
             #print self.messagesToVar[(i,var)].val
 
-            output *= self.messagesToVar[(i,var)].normalize().val[0]
-        return [output, 1.-output]
+            output *= self.messagesToVar[(i,var)].normalize().val[1]
+        return [1.-output, output]
 
         # everything = None
         # for friends in self.varToFac[var]:

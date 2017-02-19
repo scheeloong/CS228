@@ -46,13 +46,22 @@ Z, which is the normalizing constant is just
 \begin{align*}
 & \sum_A\dots\sum_Y P(A\dots Y) = \sum_A\sum_B\phi(A,B) * \sum_C\phi(B,C) \dots \sum_Y\phi(X,Y)
 \end{align*}
-Z takes $nd^2$ time to calculate because each minisum function takes d time to evaluate per  EXPLAIN THIS PLEASE. EACH FUNCTION IS D time, and D evaluations per update
+Z takes $nd^2$ time to calculate because this is just message passing across the entire array. Note that when we try calculating the marginals for a pair of variables, the variables cut out three parts of the chain. WLOG call them $x_i$ and $x_j$ with $i<j$. For all $x_k$ with $k<i$ or $x_m$ with $m>j$, then you can do basic message propogation to calculate each chain for $nd^2$ using basic message passing. Then, to get the middle part, you can choose to extend the left side (WLOG) and calculate the middle chain for each fixed value of $x_i$, and then unite it with the right chain, then normalize to have a complete probability. Thus, since you do message passing d times, it takes $nd^3$. The left and right chains eventually cancel out, but the middle calculation still dominates the run time. To calculate all n^2 pairs, the runtime is then $n^3d^3$
+
+Let r(x) be the right chain and l(x) be the left chain. They then cancel out.
+
+Then \begin{align*}
+& P(x) = \frac{l(x) \phi(X_i,x_{i+1}) \dots\phi(x_{j-1},X_j)*r(x)}{l(x) \sum_{x_i}\phi(x_i,x_{i+1}) \dots \sum_{x_j}\phi(x_j-1,x_{j})*r(x)} \nl
+\frac{\phi(X_i,x_{i+1}) \dots\phi(x_{j-1},X_j)}{ \sum_{x_i}\phi(x_i,x_{i+1}) \dots \sum_{x_j}\phi(x_j-1,x_{j})}
+\end{align*}
 
 
 \ss{2.2}
 
 Note that $X_i$ and $X_j$ are independent conditioned on $X_{j-1}$
-\[P(X_i,X_j)=\sum_{x_{j-1}} P(X_i,X_{j-1})P(X_j \mid X_{j-1})\]
+\[\sum_{x_{j-1}} P(X_i,X_{j-1})P(X_j \mid X_{j-1}) = \sum_{x_{j-1}} P(X_i,X_{j-1},X_j) = P(X_i,X_j) 
+\]
+
 
 \P 3
 

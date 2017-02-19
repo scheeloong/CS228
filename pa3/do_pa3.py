@@ -181,14 +181,14 @@ def do_part_c():
     x = np.zeros((N, 1), dtype='int32')
     ran = np.random.rand(N)
     x[ran<p] = 1
+    x[0] = 1
 
     y = encodeMessage(x, G)
 
 
     graph = constructClusterGraph(y, H, p)
 
-
-    graph.runParallelLoopyBP(50)
+    graph.runParallelLoopyBP(5)
 
     prob = np.zeros(N)
     X = np.arange(N)
@@ -245,15 +245,17 @@ def do_part_fg(error):
     # You should flattern img first and treat it as the message x in the previous parts.
 
 
-
     ################################################################
+
+np.random.seed(10)
 
 #print('Doing part (a): Should see 0.0, 0.0, >0.0')
 #do_part_a()
-#print('Doing part (c)')
-#do_part_c()
+
+print('Doing part (c)')
+do_part_c()
 print('Doing part (d)')
-do_part_de(10, 0.06)
+#do_part_de(10, 0.06)
 print('Doing part (e)')
 #do_part_de(10, 0.08)
 #do_part_de(10, 0.10)
