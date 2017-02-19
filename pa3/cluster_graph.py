@@ -99,8 +99,10 @@ class ClusterGraph:
 
             ans = 0
             for i in range(self.numVar):
-                print self.estimateMarginalProbability(i)[0]
-                if self.estimateMarginalProbability(i)[0] < 0.5:
+                if iter > 0:
+                    break
+                #print self.yhat[i]
+                if self.estimateMarginalProbability(i)[1] > 0.5:
                     ans += 1
 
             self.ham.append(ans)
@@ -204,8 +206,8 @@ class ClusterGraph:
             #print i
             #print self.messagesToVar[(i,var)].val
 
-            output *= self.messagesToVar[(i,var)].normalize().val[1]
-        return [1.-output, output]
+            output *= self.messagesToVar[(i,var)].normalize().val[0]
+        return [output, 1.-output]
 
         # everything = None
         # for friends in self.varToFac[var]:

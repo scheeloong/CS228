@@ -81,6 +81,8 @@ def constructClusterGraph(yhat, H, p):
     G = ClusterGraph(M)
     domain = [0, 1]
 
+    G.yhat = yhat
+
 
     # Unary factors first
     G.nbr = [[] if index < M else np.where(H[index-M]==1)[0] for index in range(M+N)]
@@ -188,20 +190,12 @@ def do_part_c():
 
     graph.runParallelLoopyBP(50)
 
-    print graph.factor[332].scope
-
-    print graph.messagesToVar[(332,0)].val
-
-
-    prob = graph.estimateMarginalProbability(0)
-    print str(prob[0]) + " " + str(prob[1]) + " " + str(y[0])
-    #return
-
     prob = np.zeros(N)
     X = np.arange(N)
 
     for i in range(N):
         prob[i] = graph.estimateMarginalProbability(i)[1]
+
 
     plt.plot(X, prob)
     plt.show()
