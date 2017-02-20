@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  19 FEB 2017 19:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  19 FEB 2017 20:33
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -661,13 +661,13 @@ LaTeX Font Info:    External font `lmex10' loaded for size
  [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (2.626pt too wide) in paragraph at lines 95--98
+Overfull \hbox (2.626pt too wide) in paragraph at lines 105--108
 []\OT1/lmr/m/n/10 for i in range(N): for var in np.where(H[i]==1)[0]: G.varToFa
 c[var].append(i+M) 
  []
 
 
-Overfull \hbox (49.98775pt too wide) in paragraph at lines 106--113
+Overfull \hbox (49.98775pt too wide) in paragraph at lines 116--123
 []\OT1/lmr/m/n/10 if yhat[i] == 1: vals = [p, 1.-p] if yhat[i] == 0: vals = [1.
 -p, p] G.factor.append(Factor(None,
  []
@@ -675,121 +675,121 @@ Overfull \hbox (49.98775pt too wide) in paragraph at lines 106--113
 <5c.png, id=22, 462.528pt x 346.896pt>
 File: 5c.png Graphic file (type png)
  <use 5c.png>
-Package pdftex.def Info: 5c.png used on input line 142.
+Package pdftex.def Info: 5c.png used on input line 152.
 (pdftex.def)             Requested size: 345.0pt x 258.76335pt.
  [3]
 <Point6.png, id=27, 462.528pt x 346.896pt>
 File: Point6.png Graphic file (type png)
  <use Point6.png>
-Package pdftex.def Info: Point6.png used on input line 148.
+Package pdftex.def Info: Point6.png used on input line 158.
 (pdftex.def)             Requested size: 345.0pt x 258.76335pt.
  [4 <./5c.png>]
 <Point8.png, id=32, 462.528pt x 346.896pt>
 File: Point8.png Graphic file (type png)
  <use Point8.png>
-Package pdftex.def Info: Point8.png used on input line 154.
+Package pdftex.def Info: Point8.png used on input line 164.
 (pdftex.def)             Requested size: 345.0pt x 258.76335pt.
 
 <Point1.png, id=33, 462.528pt x 346.896pt>
 File: Point1.png Graphic file (type png)
  <use Point1.png>
-Package pdftex.def Info: Point1.png used on input line 155.
+Package pdftex.def Info: Point1.png used on input line 165.
 (pdftex.def)             Requested size: 345.0pt x 258.76335pt.
  [5 <./Point6.png>]
 [6 <./Point8.png>] <0.06_0.png, id=42, 40.15pt x 40.15pt>
 File: 0.06_0.png Graphic file (type png)
  <use 0.06_0.png>
-Package pdftex.def Info: 0.06_0.png used on input line 161.
+Package pdftex.def Info: 0.06_0.png used on input line 171.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
 
 <0.06_1.png, id=43, 40.15pt x 40.15pt>
 File: 0.06_1.png Graphic file (type png)
  <use 0.06_1.png>
-Package pdftex.def Info: 0.06_1.png used on input line 162.
+Package pdftex.def Info: 0.06_1.png used on input line 172.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [7 <./Point1.png>]
 <0.06_2.png, id=49, 40.15pt x 40.15pt>
 File: 0.06_2.png Graphic file (type png)
  <use 0.06_2.png>
-Package pdftex.def Info: 0.06_2.png used on input line 163.
+Package pdftex.def Info: 0.06_2.png used on input line 173.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [8 <./0.06_0.png>]
 <0.06_3.png, id=54, 40.15pt x 40.15pt>
 File: 0.06_3.png Graphic file (type png)
  <use 0.06_3.png>
-Package pdftex.def Info: 0.06_3.png used on input line 164.
+Package pdftex.def Info: 0.06_3.png used on input line 174.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [9 <./0.06_1.png>]
 <0.06_5.png, id=59, 40.15pt x 40.15pt>
 File: 0.06_5.png Graphic file (type png)
  <use 0.06_5.png>
-Package pdftex.def Info: 0.06_5.png used on input line 165.
+Package pdftex.def Info: 0.06_5.png used on input line 175.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [10 <./0.06_2.png>]
 <0.06_10.png, id=64, 40.15pt x 40.15pt>
 File: 0.06_10.png Graphic file (type png)
  <use 0.06_10.png>
-Package pdftex.def Info: 0.06_10.png used on input line 166.
+Package pdftex.def Info: 0.06_10.png used on input line 176.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [11 <./0.06_3.png>]
 <0.06_20.png, id=69, 40.15pt x 40.15pt>
 File: 0.06_20.png Graphic file (type png)
  <use 0.06_20.png>
-Package pdftex.def Info: 0.06_20.png used on input line 167.
+Package pdftex.def Info: 0.06_20.png used on input line 177.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [12 <./0.06_5.png>]
 <0.06_30.png, id=74, 40.15pt x 40.15pt>
 File: 0.06_30.png Graphic file (type png)
  <use 0.06_30.png>
-Package pdftex.def Info: 0.06_30.png used on input line 168.
+Package pdftex.def Info: 0.06_30.png used on input line 178.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [13 <./0.06_10.png>]
 [14 <./0.06_20.png>] <0.1_0.png, id=84, 40.15pt x 40.15pt>
 File: 0.1_0.png Graphic file (type png)
  <use 0.1_0.png>
-Package pdftex.def Info: 0.1_0.png used on input line 176.
+Package pdftex.def Info: 0.1_0.png used on input line 186.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
 
 <0.1_1.png, id=85, 40.15pt x 40.15pt>
 File: 0.1_1.png Graphic file (type png)
  <use 0.1_1.png>
-Package pdftex.def Info: 0.1_1.png used on input line 177.
+Package pdftex.def Info: 0.1_1.png used on input line 187.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [15 <./0.06_30.png>]
 <0.1_2.png, id=90, 40.15pt x 40.15pt>
 File: 0.1_2.png Graphic file (type png)
  <use 0.1_2.png>
-Package pdftex.def Info: 0.1_2.png used on input line 178.
+Package pdftex.def Info: 0.1_2.png used on input line 188.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [16 <./0.1_0.png>]
 <0.1_3.png, id=95, 40.15pt x 40.15pt>
 File: 0.1_3.png Graphic file (type png)
  <use 0.1_3.png>
-Package pdftex.def Info: 0.1_3.png used on input line 179.
+Package pdftex.def Info: 0.1_3.png used on input line 189.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [17 <./0.1_1.png>]
 <0.1_5.png, id=100, 40.15pt x 40.15pt>
 File: 0.1_5.png Graphic file (type png)
  <use 0.1_5.png>
-Package pdftex.def Info: 0.1_5.png used on input line 180.
+Package pdftex.def Info: 0.1_5.png used on input line 190.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [18 <./0.1_2.png>]
 <0.1_10.png, id=105, 40.15pt x 40.15pt>
 File: 0.1_10.png Graphic file (type png)
  <use 0.1_10.png>
-Package pdftex.def Info: 0.1_10.png used on input line 181.
+Package pdftex.def Info: 0.1_10.png used on input line 191.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [19 <./0.1_3.png>]
 <0.1_20.png, id=111, 40.15pt x 40.15pt>
 File: 0.1_20.png Graphic file (type png)
  <use 0.1_20.png>
-Package pdftex.def Info: 0.1_20.png used on input line 182.
+Package pdftex.def Info: 0.1_20.png used on input line 192.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [20 <./0.1_5.png>]
 <0.1_30.png, id=116, 40.15pt x 40.15pt>
 File: 0.1_30.png Graphic file (type png)
  <use 0.1_30.png>
-Package pdftex.def Info: 0.1_30.png used on input line 183.
+Package pdftex.def Info: 0.1_30.png used on input line 193.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [21 <./0.1_10.png>]
 [22 <./0.1_20.png>] [23 <./0.1_30.png>] (./hw3.aux)
@@ -804,7 +804,7 @@ Here is how much of TeX's memory you used:
  6396 multiletter control sequences out of 15000+600000
  39734 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,9n,24p,953b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,9n,24p,991b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/
 texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/20
 16/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2016/texmf-d
@@ -820,7 +820,7 @@ public/lm/lmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lm
 r7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></u
 sr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on hw3.pdf (23 pages, 456433 bytes).
+Output written on hw3.pdf (23 pages, 459223 bytes).
 PDF statistics:
  175 PDF objects out of 1000 (max. 8388607)
  96 compressed objects within 1 object stream

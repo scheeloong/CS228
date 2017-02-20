@@ -91,8 +91,8 @@ class ClusterGraph:
                     prob = self.estimateMarginalProbability(i)[1]
                     img[i] = 1 if prob > .5 else 0
 
-                    print iter
-                    print np.sum(img!=self.X)
+                print iter
+                print np.sum(img!=self.X)
 
                 #plt.imshow(img.reshape([40,40]))
                 #plt.show()
