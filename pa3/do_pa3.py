@@ -64,7 +64,7 @@ def encodeMessage(x, G):
     return np.mod(np.dot(G, x), 2)
 
 
-def constructClusterGraph(yhat, H, p, flip):
+def constructClusterGraph(yhat, H, p, X):
     '''
     :param - yhat: observed codeword
     :param - H parity check matrix
@@ -83,25 +83,18 @@ def constructClusterGraph(yhat, H, p, flip):
 
     G.yhat = yhat
 
-
     # Unary factors first
-    G.nbr = [[] if index < M else np.where(H[index-M]==1)[0] for index in range(M+N)]
     G.varToFac = [[i] for i in range(M)]
 
     for i in range(N):
         for var in np.where(H[i]==1)[0]:
-            G.varToFac[var].append(i)
+            G.varToFac[var].append(i+M)
 
-    for i in range(M):
-        for j in range(N):
-            if H[j][i] == 1:
-                G.nbr[i].append(j+M) # because the parity check factors are above
-
-    #insides = [[index] if index < M else np.where(H[index-M]==1)[0] for index in range(M+N)]
-    G.sepset = [[[] for b in range(M+N)] for a in range(M+N)]
     G.factor = []
     G.M = M
     G.N = N
+    G.p = p
+    G.X = X
 
     for i in range(M):
 
@@ -118,29 +111,11 @@ def constructClusterGraph(yhat, H, p, flip):
             s = 0
             for i in index:
                 s += i
-            if s%2 == flip:
+            if s%2 == 0:
                 val[index] = 1.
 
-        G.factor.append(Factor(None, scope, [2]*scope.size, (val)).normalize())
+        G.factor.append(Factor(None, scope, [2]*scope.size, (val)))
 
-    ##############################################################
-    # To do: your code starts here
-
-
-
-    for a in range(M+N):
-        for b in range(M+N):
-            if a < M and b < M: # unary variables have no friedns
-                continue
-            else: #possible neighbors
-                for _, nei in enumerate(G.nbr[a]):
-                    for _, nei2 in enumerate(G.nbr[b]):
-                        if nei == nei2:
-                            G.sepset[a][b].append(nei)
-                            # super bad way to check for shared messages
-                            break
-
-    ##############################################################
     return G
 
 def do_part_a():
@@ -152,7 +127,7 @@ def do_part_a():
         [1, 0, 1, 1, 0], \
         [1, 0, 1, 0, 1]])
     p = 0.95
-    G = constructClusterGraph(yhat, H, p)
+    G = constructClusterGraph(yhat, H, p, 0)
     ##############################################################
     # To do: your code starts here 
     # Design two invalid codewords ytest1, ytest2 and one valid codewords ytest3.
@@ -179,23 +154,21 @@ def do_part_c():
     ##############################################################
     # To do: your code starts here
     x = np.zeros((N, 1), dtype='int32')
-    ran = np.random.rand(N)
-    x[ran<p] = 1
-    x[0] = 1
 
     y = encodeMessage(x, G)
 
+    ran = np.random.rand(y.shape[0])
+    y[ran<p] = [1]
 
-    graph = constructClusterGraph(y, H, p, 0)
+    graph = constructClusterGraph(y, H, p, None)
 
-    graph.runParallelLoopyBP(5)
+    graph.no_help(80)
 
-    prob = np.zeros(N)
-    X = np.arange(N)
+    prob = np.zeros(y.shape[0])
+    X = np.arange(y.shape[0])
 
-    for i in range(N):
+    for i in range(y.shape[0]):
         prob[i] = graph.estimateMarginalProbability(i)[1]
-
 
     plt.plot(X, prob)
     plt.show()
@@ -209,32 +182,32 @@ def do_part_de(numTrials, p, iterations=50):
     param - iterations: number of Loopy BP iterations we run for each trial
     '''
 
-    loops = 10
+    loops = 50
     G, H = loadLDPC('ldpc36-128.mat')
     N = G.shape[1]
 
     ##############################################################
     # To do: your code starts here
 
-    x = np.zeros((N, 1), dtype='int32')
-    ran = np.random.rand(N)
-    x[ran<p] = 1
+    hams = []
+    for trial in range(numTrials):
 
-    y = encodeMessage(x, G)
+        x = np.zeros((N, 1), dtype='int32')
+        y = encodeMessage(x, G)
+        ran = np.random.rand(y.shape[0])
+        y[ran<p] = [1]
 
-    graph = constructClusterGraph(y, H, p, 0)
+        graph = constructClusterGraph(y, H, p, None)
 
-    X = np.arange(loops)
-    ham = np.array(graph.runParallelLoopyBP(loops))
-
-    print ham
-
-    plt.plot(X, ham)
+        X = np.arange(loops)
+        hams.append(copy.copy(np.array(graph.no_help(loops))))
+    for ham in hams:
+        plt.plot(X, ham)
     plt.show()
 
     ##############################################################
 
-def do_part_fg(error):
+def do_part_fg(p):
     '''
     param - error: the transmission error probability
     '''
@@ -243,7 +216,20 @@ def do_part_fg(error):
     ##############################################################
     # To do: your code starts here
     # You should flattern img first and treat it as the message x in the previous parts.
+    N = G.shape[1]
 
+    ##############################################################
+    # To do: your code starts here
+    x = img.flatten()
+
+    y = encodeMessage(x, G)
+
+    ran = np.random.rand(y.shape[0])
+    y[ran<p] = [1]
+
+    graph = constructClusterGraph(y, H, p, x)
+
+    graph.no_help(31)
 
     ################################################################
 
@@ -251,16 +237,16 @@ np.random.seed(10)
 
 #print('Doing part (a): Should see 0.0, 0.0, >0.0')
 #do_part_a()
-
-print('Doing part (c)')
-do_part_c()
-#print('Doing part (d)')
-#do_part_de(10, 0.06)
-print('Doing part (e)')
-#do_part_de(10, 0.08)
-#do_part_de(10, 0.10)
-print('Doing part (f)')
-#do_part_fg(0.06)
-print('Doing part (g)')
-#do_part_fg(0.10)
+# pass
+# print('Doing part (c)')
+# do_part_c()
+# #print('Doing part (d)')
+# #do_part_de(10, 0.06)
+# print('Doing part (e)')
+# #do_part_de(10, 0.08)
+# #do_part_de(10, 0.10)
+# print('Doing part (f)')
+do_part_fg(0.06)
+# print('Doing part (g)')
+do_part_fg(0.10)
 

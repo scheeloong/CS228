@@ -8,6 +8,7 @@
 from factors import *
 import numpy as np
 import pdb
+import copy
 import matplotlib.pyplot as plt
 
 class ClusterGraph:
@@ -46,8 +47,9 @@ class ClusterGraph:
         '''
         a = np.array(assignment, copy=False)
         output = 1.0
-        for f in self.factor:
-            output *= f.val[assignment_to_indices([a[f.scope]], f.card)]
+        for i,f in enumerate(self.factor):
+            print output
+            output *= f.val.flatten()[assignment_to_indices([a[f.scope]], f.card)]
         return output
 
     # THIS IS WRONG
@@ -75,6 +77,85 @@ class ClusterGraph:
             self.messages[(src, dst)] = inMsg
         return self.messages[(src, dst)]
 
+
+    def no_help(self, iterations):
+        self.to_fact = [[[1.,1.] for i in range(len(self.factor))] for j in range(self.numVar)]
+        self.to_var = [[[1.,1.] for i in range(self.numVar)] for j in range(len(self.factor))]
+        ham = []
+        for iter in range(iterations):
+
+            if iter in [0,1,2,3,5,10,20,30]:
+                N = 1600
+                img = np.zeros(N)
+                for i in range(N):
+                    prob = self.estimateMarginalProbability(i)[1]
+                    img[i] = 1 if prob > .5 else 0
+
+                    print iter
+                    print np.sum(img!=self.X)
+
+                #plt.imshow(img.reshape([40,40]))
+                #plt.show()
+
+                #plt.imsave(str(self.p) + "_" + str(iter)+".png", img.reshape([40,40]))
+
+            print "On iteration " + str(iter)
+
+            next_to_fact = [[None for i in range(len(self.factor))] for j in range(self.numVar)]
+            next_to_var = [[None for i in range(self.numVar)] for j in range(len(self.factor))]
+           
+            # to var
+            for dest in range(self.numVar):
+                for src in self.varToFac[dest]:
+                    message = np.array([1.,1.])
+                    for i, incoming in enumerate(self.factor[src].scope):
+                        if incoming != dest:
+                            message = np.multiply.outer(message, self.to_fact[incoming][src])
+
+                    assert message.shape == self.factor[src].val.shape
+
+                    total = np.multiply(message, self.factor[src].val)
+
+                    arr = [np.sum(total[0]), np.sum(total[1])]
+                    
+                    # if src == 332 and dest == 0 and iter == 2:
+                    #     print "HEre"
+                    #     pdb.set_trace()
+
+                    arr = arr/np.sum(arr)
+
+                    next_to_var[src][dest] = copy.copy(arr)
+
+            # to fac
+            for dest, fact in enumerate(self.factor):
+                for src in fact.scope:
+                    message = np.array([1.,1.])
+                    for i, incoming in enumerate(self.varToFac[src]):
+                        if incoming != dest:
+                            message = np.multiply(message, self.to_var[incoming][src])
+
+                    assert message.shape == (2,)
+
+                    message = message / np.sum(message)
+
+                    next_to_fact[src][dest] = copy.copy(message)
+
+            self.to_fact = copy.copy(next_to_fact)
+            self.to_var = copy.copy(next_to_var)
+
+        #pdb.set_trace()
+
+            ans = 0
+            for i in range(self.numVar):
+                    #print self.yhat[i]
+                if self.estimateMarginalProbability(i)[1] > self.estimateMarginalProbability(i)[0]:
+                    ans += 1
+
+            ham.append(ans)
+
+        return ham
+
+
     def runParallelLoopyBP(self, iterations): 
         '''
         param - iterations: the number of iterations you do loopy BP
@@ -92,10 +173,9 @@ class ClusterGraph:
                 self.messagesToVar[(j,i)] = self.emptyFac(i)
 
         for iter in range(iterations):
+
         ###############################################################################
         # To do: your code here
-
-            # UPDATE ALL THE MESSAGES INTO VARIABLES
 
             ans = 0
             for i in range(self.numVar):
@@ -118,21 +198,20 @@ class ClusterGraph:
 
                     # nbr is dest, findex is the source
 
+                    #if iter == 1 and findex == 300:
+                        #pdb.set_trace()
+
                     messages = None
                     for _, nbr2 in enumerate(friends):
                         if nbr2==nbr:
-                            continue
+                            messages = self.emptyFac(nbr) if messages == None else messages.multiply(self.emptyFac(nbr))
                         messages = self.messagesToFac[(nbr2, findex)] if messages == None else messages.multiply(self.messagesToFac[(nbr2, findex)])
+                    
+                    assert fact.val.shape == messages.val.shape
+
                     total = fact if messages == None else fact.multiply(messages)
 
-                    print total.val
-                    print total.normalize().marginalize_all_but([nbr], "max").normalize().val
-                    #print total.marginalize_all_but([nbr]).normalize().val
-                    #print self.messagesToVar[(findex,nbr)].val
-                    #print total.val
-
-
-                mtv[(findex,nbr)] = total.normalize().marginalize_all_but([nbr], "max").normalize()
+                    mtv[(findex,nbr)] = total.normalize().marginalize_all_but([nbr], "sum").normalize()
                     #print mtv[(findex,nbr)].val
                     #print self.messagesToVar[(findex,nbr)].val
 
@@ -158,15 +237,13 @@ class ClusterGraph:
                     messages = self.messagesToVar[(var,var)]
                     for b, nbr2 in enumerate(friends):
                         if b == i:
-                            continue
+                            messages.multiply(self.emptyFac(nbr))
                         messages = messages.multiply(self.messagesToVar[(nbr2,var)])
 
                     mtf[(var,nbr)] = messages.normalize()
 
             self.messagesToVar = mtv
             self.messagesToFac = mtf
-
-
 
         return self.ham
 
@@ -200,13 +277,16 @@ class ClusterGraph:
         ###############################################################################
         # To do: your code here 
 
-        output = 1.0
+        one = 1.0
+        zero = 1.0
+
         for i,f in enumerate(self.factor):
             if var not in f.scope:
                 continue
 
-            output *= self.messagesToVar[(i,var)].normalize().val[1]
-        return [1.-output, output]
+            one *= self.to_var[i][var][1]
+            zero *= self.to_var[i][var][0]
+        return (np.array([zero, one]) / (one+zero))
 
         # everything = None
         # for friends in self.varToFac[var]:
