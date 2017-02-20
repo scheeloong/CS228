@@ -74,7 +74,7 @@ We have all of these values, since $j-i-1 = x-1 <x$, and we can use our previous
 
 \P 3
 
-If you change a factor (by changing its value, or by adding an edge) in a clique, check all its neighbors and see if they are affected, AKA the seperation set contains the factor that has been changed. If they are affected, then everything in that entire subtree needs to be updated, since they all depend on that factor in the message passing. If the factor is not in the sep-set, then it gets marginalized out anyways.
+If you change a factor (by changing its value, or by adding an edge) in a clique, check all its neighbors and see if they are affected, AKA the seperation set contains the factor that has been changed. If they are affected, then you need to continue updating along the path until you can't continue through sep-sets, since everything that the variable touches needs to be changed.
 
 \ss{3.2}
 
