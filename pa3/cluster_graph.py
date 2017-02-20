@@ -97,7 +97,7 @@ class ClusterGraph:
                 #plt.imshow(img.reshape([40,40]))
                 #plt.show()
 
-                #plt.imsave(str(self.p) + "_" + str(iter)+".png", img.reshape([40,40]))
+                plt.imsave(str(self.p) + "_" + str(iter)+".png", img.reshape([40,40]))
 
             print "On iteration " + str(iter)
 

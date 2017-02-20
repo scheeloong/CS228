@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  19 FEB 2017 20:33
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  19 FEB 2017 22:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -747,49 +747,49 @@ Package pdftex.def Info: 0.06_30.png used on input line 178.
 [14 <./0.06_20.png>] <0.1_0.png, id=84, 40.15pt x 40.15pt>
 File: 0.1_0.png Graphic file (type png)
  <use 0.1_0.png>
-Package pdftex.def Info: 0.1_0.png used on input line 186.
+Package pdftex.def Info: 0.1_0.png used on input line 184.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
 
 <0.1_1.png, id=85, 40.15pt x 40.15pt>
 File: 0.1_1.png Graphic file (type png)
  <use 0.1_1.png>
-Package pdftex.def Info: 0.1_1.png used on input line 187.
+Package pdftex.def Info: 0.1_1.png used on input line 185.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [15 <./0.06_30.png>]
 <0.1_2.png, id=90, 40.15pt x 40.15pt>
 File: 0.1_2.png Graphic file (type png)
  <use 0.1_2.png>
-Package pdftex.def Info: 0.1_2.png used on input line 188.
+Package pdftex.def Info: 0.1_2.png used on input line 186.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [16 <./0.1_0.png>]
 <0.1_3.png, id=95, 40.15pt x 40.15pt>
 File: 0.1_3.png Graphic file (type png)
  <use 0.1_3.png>
-Package pdftex.def Info: 0.1_3.png used on input line 189.
+Package pdftex.def Info: 0.1_3.png used on input line 187.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [17 <./0.1_1.png>]
 <0.1_5.png, id=100, 40.15pt x 40.15pt>
 File: 0.1_5.png Graphic file (type png)
  <use 0.1_5.png>
-Package pdftex.def Info: 0.1_5.png used on input line 190.
+Package pdftex.def Info: 0.1_5.png used on input line 188.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [18 <./0.1_2.png>]
 <0.1_10.png, id=105, 40.15pt x 40.15pt>
 File: 0.1_10.png Graphic file (type png)
  <use 0.1_10.png>
-Package pdftex.def Info: 0.1_10.png used on input line 191.
+Package pdftex.def Info: 0.1_10.png used on input line 189.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [19 <./0.1_3.png>]
 <0.1_20.png, id=111, 40.15pt x 40.15pt>
 File: 0.1_20.png Graphic file (type png)
  <use 0.1_20.png>
-Package pdftex.def Info: 0.1_20.png used on input line 192.
+Package pdftex.def Info: 0.1_20.png used on input line 190.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [20 <./0.1_5.png>]
 <0.1_30.png, id=116, 40.15pt x 40.15pt>
 File: 0.1_30.png Graphic file (type png)
  <use 0.1_30.png>
-Package pdftex.def Info: 0.1_30.png used on input line 193.
+Package pdftex.def Info: 0.1_30.png used on input line 191.
 (pdftex.def)             Requested size: 345.0pt x 345.21391pt.
  [21 <./0.1_10.png>]
 [22 <./0.1_20.png>] [23 <./0.1_30.png>] (./hw3.aux)
@@ -804,7 +804,7 @@ Here is how much of TeX's memory you used:
  6396 multiletter control sequences out of 15000+600000
  39734 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 37i,9n,24p,991b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,9n,24p,938b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/
 texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/local/texlive/20
 16/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2016/texmf-d
@@ -820,7 +820,7 @@ public/lm/lmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lm
 r7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></u
 sr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on hw3.pdf (23 pages, 459223 bytes).
+Output written on hw3.pdf (23 pages, 458410 bytes).
 PDF statistics:
  175 PDF objects out of 1000 (max. 8388607)
  96 compressed objects within 1 object stream

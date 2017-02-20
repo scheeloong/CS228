@@ -225,7 +225,8 @@ def do_part_fg(p):
     y = encodeMessage(x, G)
 
     ran = np.random.rand(y.shape[0])
-    y[ran<p] = [1]
+
+    y[ran<p] = 1-y[ran<p]
 
     graph = constructClusterGraph(y, H, p, x)
 
@@ -248,5 +249,5 @@ np.random.seed(10)
 # print('Doing part (f)')
 do_part_fg(0.06)
 # print('Doing part (g)')
-do_part_fg(0.10)
+#do_part_fg(0.10)
 

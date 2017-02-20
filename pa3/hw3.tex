@@ -48,15 +48,12 @@ Z, which is the normalizing constant is just
 & \sum_A\dots\sum_Y P(A\dots Y) = \sum_A\sum_B\phi(A,B) * \sum_C\phi(B,C) \dots \sum_Y\phi(X,Y)
 \end{align*}
 
-Z takes $nd^2$ time to calculate because this is just message passing across the entire array. Note that when we try calculating the marginals for a pair of variables, the variables cut out three parts of the chain. WLOG call them $x_i$ and $x_j$ with $i<j$. For all $x_k$ with $k<i$ or $x_m$ with $m>j$, then you can do basic message propogation to calculate each chain for $nd^2$ using basic message passing. Then, to get the middle part [bottom of the equation listed below], you can choose to extend the left side (WLOG) and calculate the middle chain for each fixed value of $x_i$, and then unite it with the right chain, then normalize to have a complete probability. Thus, since you do message passing d times when you try to marginalize the variable out (once for each value of the variable), it takes $nd^3$ The left and right chains eventually cancel out, but the middle calculation still dominates the run time. To calculate all $n^2$ pairs, the runtime is then $n^3d^3$
+Z takes $nd^2$ time to calculate because this is just message passing across the entire array. Note that when we try calculating the marginals for a pair of variables, the variables cut out three parts of the chain. WLOG call them $x_i$ and $x_j$ with $i<j$. For all $x_k$ with $k<i$ or $x_m$ with $m>j$, then you can do basic message propogation to calculate each chain for $nd^2$ using basic message passing. Then, to get the middle part [bottom of the equation listed below], you can choose to extend the left side (WLOG) and calculate the middle chain for each fixed value of $x_i$, and then unite it with the right chain, then normalize to have a complete probability. Thus, since you do message passing d times when you try to marginalize the variable out (once for each value of the variable), it takes $nd^3$ the middle calculation still dominates the run time. To calculate all $n^2$ pairs, the runtime is then $n^3d^3$
 
-Let r(x) be the right chain and l(x) be the left chain. They then cancel out.
 
 Then \begin{align*}
-& P(x) = \frac{l(x) \phi(X_i,x_{i+1}) \dots\phi(x_{j-1},X_j)*r(x)}{l(x) \sum_{x_i}\phi(x_i,x_{i+1}) \dots \sum_{x_j}\phi(x_j-1,x_{j})*r(x)} \nl
-\frac{\phi(X_i,x_{i+1}) \dots\phi(x_{j-1},X_j)}{ \sum_{x_i}\phi(x_i,x_{i+1}) \dots \sum_{x_j}\phi(x_j-1,x_{j})}
+& P(x) = \frac{l(x) \phi(X_i,x_{i+1}) \dots\phi(x_{j-1},X_j)*r(x)}{l(x) \sum_{x_i}\phi(x_i,x_{i+1}) \dots \sum_{x_j}\phi(x_j-1,x_{j})*r(x)}
 \end{align*}
-CHECK THIS DO THEY CANCEL
 
 \ss{2.2}
 
@@ -77,22 +74,25 @@ We have all of these values, since $j-i-1 = x-1 <x$, and we can use our previous
 
 \P 3
 
-If you change a factor (by changing its value, or by adding an edge) in a clique, check all its neighbors and see if they are affected, AKA the seperation set contains the factor that has been changed. If they are affected, then everything in that entire subtree needs to be updated, since they all depend on that factor in the message passing.
+If you change a factor (by changing its value, or by adding an edge) in a clique, check all its neighbors and see if they are affected, AKA the seperation set contains the factor that has been changed. If they are affected, then everything in that entire subtree needs to be updated, since they all depend on that factor in the message passing. If the factor is not in the sep-set, then it gets marginalized out anyways.
 
 \ss{3.2}
 
-If you only want the marginal over a single variable, you only need to pass the message along the single path to the variable you want to calculate, up to d-separation. In addition, you don't need to update the entire tree, just for every node that you are d-seperated on since you marginalize the probability out otherwise.
+Pick any clique that contains X. Once you find the probabiity of all the variables in the clique, you can marginalize out the other variables so that you have P(x). The markov blanket for this, is all the neighboring cliques. If the factor you changed is not inside this markov blanket, you don't need to do anything since it all gets marginalized out anyways.
 
-EQUATION FOR MESSAGE DOESN"T DEPEND ON THE OLD GUY. Calibrated only if all the messages that are coming in are ok.
+If your factor is inside your markov blanket, then you just need to make sure that all the incoming messages to the clique that contains X is correct, since P(C) is just the factor times the product of all the incoming messages with marginalization. If your factor is inside the clique, you just need two passes. One for the outward messages in which the sep-set also contains the factor you changed to make sure your neighbors are correct, then one for the inward messages to make sure you are calibrated. If you are in among the neighbors, just updating the message inward (if the factor is in the sep-set) is sufficient.
 
 \P 4
 
 \ss{4.2.1}
 
-Inference is exponential. 
-No
+$P(X \mid E)$ is computationally intractable (NP hard to calculate on a general bayes net). Sampling from this distribution is also hard, since you can't calculate $P(X \mid E)$ for any given X easily.
 
-Yes, forward prop
+Computing $P(X,E)$ though is doable, since you just walk through the entire Bayes tree and propogate down on your probabilities. Forwardprop
+
+\ss b
+
+
 
 \P 5
 
@@ -166,7 +166,7 @@ As the error rate increases, it gets harder and harder for loopy BP to correctly
 
 \ss f
 
-Correctly decodes picture after X iterations. At iteration 0, the picture is non existent since all the incoming messages to variables are initialized uniformly.
+Pretty much decodes picture after 30 iterations. At iteration 0, the picture is non existent since all the incoming messages to variables are initialized uniformly.
 
 \pic{With 0.06 error rate and 0 iteration}{{0.06_0}.png}
 \pic{With 0.06 error rate and 1 iteration}{{0.06_1}.png}
@@ -179,9 +179,7 @@ Correctly decodes picture after X iterations. At iteration 0, the picture is non
 
 \ss g
 
-Correctly decodes picture after X iterations. At iteration 0, the picture is non existent since all the incoming messages to variables are initialized uniformly. Naturally, since there is a higher error rate, the picture looks more blurry at first and takes a longer time to come to a good picture, but it still does eventually.
-
-With a higher error rate, naturally the or
+At iteration 0, the picture is non existent since all the incoming messages to variables are initialized uniformly. Naturally, since there is a higher error rate, the picture looks more blurry at first, but it doesn't really correct to perfection unlike the error rate of 0.06. At some point, the parity checks get so muffled that you can no longer make out what the picture was supposed to be.
 
 \pic{With 0.1 error rate and 0 iteration}{{0.1_0}.png}
 \pic{With 0.1 error rate and 1 iteration}{{0.1_1}.png}
