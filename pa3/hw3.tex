@@ -80,7 +80,7 @@ If you change a factor (by changing its value, or by adding an edge) in a clique
 
 Pick any clique that contains X. Once you find the probabiity of all the variables in the clique, you can marginalize out the other variables so that you have P(x). The markov blanket for this, is all the neighboring cliques. If the factor you changed is not inside this markov blanket, you don't need to do anything since it all gets marginalized out anyways.
 
-If your factor is inside your markov blanket, then you just need to make sure that all the incoming messages to the clique that contains X is correct, since P(C) is just the factor times the product of all the incoming messages with marginalization. If your factor is inside the clique, you just need two passes. One for the outward messages in which the sep-set also contains the factor you changed to make sure your neighbors are correct, then one for the inward messages to make sure you are calibrated. If you are in among the neighbors, just updating the message inward (if the factor is in the sep-set) is sufficient.
+If your factor is inside your markov blanket, then you just need to make sure that all the incoming messages to the clique that contains X is correct, since P(C) is just the factor times the product of all the incoming messages with marginalization. If your factor is inside the clique, you do not need to update any messages and can just directly compute the new marginal with your new factor. This is because all the messages coming in are correct (they do not depend on any messages going out of this clique or they would double count). If you are in among the neighbors, just updating the message inward (if the factor is in the sep-set) is sufficient.
 
 \P 4
 
@@ -91,8 +91,38 @@ $P(X \mid E)$ is computationally intractable (NP hard to calculate on a general 
 Computing $P(X,E)$ though is doable, since you just walk through the entire Bayes tree and propogate down on your probabilities. Forwardprop
 
 \ss b
+\s 1
 
+Notice that belief propogation runs exponential in the size of the largest clique, but since we have a handy dandy tree structure, it runs in polynomial time. This suggests a way for us to sample well.
 
+Transform your Bayesian net to a Markov net. Since every node has exactly one parent, there are no V structures so the transition is natural. Then, we can run variable elimination to get $P(X_i \mid E)$ for all $X_i$. From here, we need a way to sample everything instead of just finding the MAP assignment. But we can do this in a clever way. Topologically sort the variables you need, then sample the first one. Then, ELIMINATE IT from the graph and rerun Variable Elimination to compute the new marginals on the new graph, or essentially $P(x_j \mid E,x_i)$. Since there are N variables to eliminate, and every BP operation is polynomial, then this is polynomial.
+
+So:
+
+For each variable X (topopologically sorted):
+\begin{itemize}
+\item Rerun Belief Propogation on the new graph
+\item Sample from X's possible values according to X's marginal probability on this new graph
+\item Eliminate the variable using Variable Elimination to create the next graph.
+\end{itemize}
+
+At the end, you will have $P(X_1 \mid E) * P(X_2 \mid E, X_1) \dots$ and a valid sample
+
+\s 2
+\[
+	w(x) = \frac{P(X=x,E=e)}{Q(X=x \mid E=e)}
+\]
+
+W(x) is supposed to approximate P(e). In the lecture notes, the Q function models $P(X \mid E)$, but here it models P, so we divide instead by $Q(X=x \mid E=e)$
+
+You can calculate $P(X=x,E=e)$ easily through forward prop, and $Q(X=x \mid E=e)$ through BP.
+
+\s 3
+\[
+\hat{P}(X=x \mid E=e) = \frac{\sum_{t=1}^T \delta_{x_i}w(z^t)}{\sum_{t=1}^T w(z^t)}
+\]
+
+where $\delta$ is your indicator function to see if your assignment is consistent with your evidence, and w is the function defined in part 2. The idea is the top approximates $P(X,E)$ and the bottom estimates $P(E)$, and thus importance sampling samples from $P(X \mid E)$
 
 \P 5
 
