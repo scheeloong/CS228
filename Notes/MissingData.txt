@@ -1,0 +1,29 @@
+Missing data. Can do with Naive Bayes, but can be hard in general.
+
+When you have missing data with log likelihood maximizing gets hard. The sum within the log prevents you from getting stuff broken up. Also, since each part is normal, the sum is non normal and hard to use gradient descent on.
+
+
+
+EM Algorithm.
+
+Start with a random guess of thetas.
+
+Repeat:
+Hallucinate some incomplete data based on parameters. [Can evaluate the full Bayesian tree probability]. Weight the sample based on probability, similar to importance sampling.
+Update the parameters.
+
+Data set is now bigger and weighted.
+
+Need to be able to calculate P(Z | X, theta) at each iteration.
+
+Use Jensen's to shove the log in. To from in some importance sample like thing. Bound is tight, which means that optimizing the lower bound does imply that you are making progress towards the upper bound. If Q = P(Z | X, theta), then the log push is the same.
+
+New data set bigger because of Z, and weighted by Q.
+
+Gaussian mixture model: You have a mixture of multivariate Gaussians which are all independent of each other. You can model this by first selecting a Gaussian, then sampling from it. It is really strong for modelling really really complex phenomena in a simpler way. Wait, this almost feels like K-nn. All this shit that I was doing earlier is actually really really hard once you dig just beneath the surface.
+
+QQQQQ
+Why do you make progress? Why does Q get closer?
+
+
+
