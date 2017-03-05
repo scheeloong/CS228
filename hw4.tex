@@ -84,8 +84,8 @@ Since the likelihood is just the log of the probability summed over all the data
 Where as per above,
 
 \begin{align*}
-&\ell_{Y \mid X}(\theta, D) = \sum_i^M (\sum_{n \in N} \theta_n f_n(x_n^i,y_n^i)) - log \sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i))) \\ \sp &
-\ell_{X \mid Y}(\theta, D) = \sum_i^M (\sum_{n \in N} \theta_n f_n(x_n^i,y_n^i)) - log \sum_n \sum_x exp(\theta_n * f_n(y_n^i,x_n)))
+&\ell_{Y \mid X}(\theta, D) = \frac{1}{M}\sum_i^M (\sum_{n \in N} \theta_n f_n(x_n^i,y_n^i)) - log \sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i))) \\ \sp &
+\ell_{X \mid Y}(\theta, D) = \frac{1}{M}\sum_i^M (\sum_{n \in N} \theta_n f_n(x_n^i,y_n^i)) - log \sum_n \sum_x exp(\theta_n * f_n(y_n^i,x_n)))
 \end{align*}
 
 \ss{2.2}
@@ -96,17 +96,51 @@ We want to calculate
 
 \begin{align*}
 & \pdv{\theta} g(\theta,D) \nl
-(1-\alpha)\t\ell_{Y \mid X}(\theta, D) + \alpha\t\ell_{X \mid Y}(\theta,D)\nl
+(1-\alpha)\t\ell_{Y \mid X}(\theta, D) + \alpha\t\ell_{X \mid Y}(\theta,D)
 \end{align*}
 
 We calculate 
 \begin{align*}
-& \t\ell_{Y \mid X}(\theta, D) \nl
-\t \sum_i^M (\sum_{n \in N} \theta_n f_n(x_n^i,y_n^i)) - log \sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i))) \nl
-\sum_i^M (\sum_{n \in N} f_n(x_n^i,y_n^i)) - \t\log \sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i))) \nl
-\sum_i^M (\sum_{n \in N} f_n(x_n^i,y_n^i)) - \frac{1}{\sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i)))} * \t (\sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i)))) \nl
-\sum_i^M (\sum_{n \in N} f_n(x_n^i,y_n^i)) - \frac{\sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i)) * f_n(y_n,x_n^i))}{\sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i)))} \nl
-\sum_i^M (\sum_{n \in N} f_n(x_n^i,y_n^i)) - \frac{\sum_n P(x_n^i) * f_n(y_n,x_n^i))}{Z(\theta, x_n^i)} \nl
+& \t\ell_{Y \mid X}(\theta, D) \nl \frac{1}{M}
+\t \sum_i^M (\sum_{n \in N} \theta_n f_n(x_n^i,y_n^i)) - log \sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i))) \nl \frac{1}{M}
+\sum_i^M (\sum_{n \in N} f_n(x_n^i,y_n^i)) - \t\log \sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i))) \nl \frac{1}{M}
+\sum_i^M (\sum_{n \in N} f_n(x_n^i,y_n^i)) - \frac{1}{\sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i)))} * \t (\sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i)))) \nl \frac{1}{M}
+\sum_i^M (\sum_{n \in N} f_n(x_n^i,y_n^i)) - \frac{\sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i)) * f_n(y_n,x_n^i))}{\sum_n \sum_y exp(\theta_n * f_n(y_n,x_n^i)))} \nl \frac{1}{M}
+\sum_i^M (\sum_{n \in N} f_n(x_n^i,y_n^i)) - \frac{ \sum_y \sum_n exp(\theta_n * f_n(y_n,x_n^i))) * f_n(y_n,x_n^i))}{Z(\theta, x^i)} \nl
+ \frac{1}{M} \sum_i^M (f(x^i,y^i)) - \sum_y P(y,x^i) f(y,x^i)) \nl
+E_Q[f(x,y)] - E_{p(y \mid x)}[f(x^i,y^i)]
 \end{align*}
+
+ Where Q is the distribution that you got while sampling 
+ 
+ so our answer is  XCXCXCXCXC IS THE M FACTOR RIGHT?????
+ 
+\begin{align*}
+ & E_Q[f(x,y)] - E_{p(y \mid x)}[f(x,y)] - \alpha E_Q[f(x,y)] + \alpha E_{p(y \mid x)}[f(x,y)] + \alpha E_Q[f(x,y)] - E_{p(x \mid y)}[f(x,y)] \nl E_Q[f(x,y)] - E_{p(y \mid x)}[f(x,y)] + \alpha E_{p(y \mid x)}[f(x,y)] - \alpha E_{p(x \mid y)}[f(x,y)]
+\end{align*}
+
+\P 4
+
+Let A denote the set of variables not in either Y or Y's markov blanket. I'm going to split up $Y_M(i,j)$ to include the 2-4 neighboring Y variables, and separately include $x_{ij}$, which would ordinarily be in Y's markov blanket.
+
+\begin{align*}
+& P(y_{ij} \mid y_{M(i,j)}) = \frac{P(y_{ij}, y_{M(i,j)})}{ P(y_{M(i,j)}))} \nl
+\frac{\sum_A P(y_{ij}, y_{M(i,j)}, A)}{ \sum_A \sum_{y_{ij}} P(y_{ij} y_{M(i,j)}),A)} \nl
+\frac{\sum_A exp(\eta \sum_N \sum_M y_{ij}x_{ij} +  \beta \sum_{edges} y_{ij}y_{i'j'})}{ \sum_A \sum_{y_{ij}} exp(\eta \sum_N \sum_M y_{ij}x_{ij} +  \beta \sum_{edges} y_{ij}y_{i'j'}) } \nl 
+\frac{exp(\eta y_{ij}x_{ij} + \beta \sum_{Y_{M(i,j)}} y_{ij}y_{i'j'}) * \sum_A exp(\eta \sum_A y_a x_a + \beta \sum_{restofedges} y_{ij}y_{i'j'})}{\sum_{y_{ij}} exp(\eta y_{ij}x_{ij} + \beta \sum_{Y_{M(i,j)}} y_{ij}y_{i'j'}) * \sum_A exp(\eta \sum_A y_a x_a + \beta \sum_{restofedges} y_{ij}y_{i'j'})} \nl
+\frac{exp(\eta y_{ij}x_{ij} + \beta \sum_{Y_{M(i,j)}} y_{ij}y_{i'j'})}{\sum_{y_{ij}} exp(\eta y_{ij}x_{ij} + \beta \sum_{Y_{M(i,j)}} y_{ij}y_{i'j'})}
+\nl \frac{exp(\eta y_{ij}x_{ij} + \beta \sum_{Y_{M(i,j)}} y_{ij}y_{i'j'})}{exp(\eta x_{ij} + \beta \sum_{y_{i'j'} \in Y_{M(i,j)}} y_{i'j'}) + exp(-\eta x_{ij} - \beta \sum_{y_{i'j'} \in Y_{M(i,j)}} y_{i'j'})}
+\end{align*}
+
+Thus, 
+
+\begin{align*}
+& P(y_{ij} = 1 \mid Y_{M(i,j)}, x_{ij}) \nl \frac{exp(\eta x_{ij} + \beta \sum_{Y_{M(i,j)}} y_{i'j'})}{exp(\eta x_{ij} + \beta \sum_{y_{i'j'} \in Y_{M(i,j)}} y_{i'j'}) + exp(-\eta x_{ij} - \beta \sum_{y_{i'j'} \in Y_{M(i,j)}} y_{i'j'})} \nl
+\frac{1}{1+ exp(-2\eta x_{ij} - 2\beta \sum_{y_{i'j'} \in Y_{M(i,j)}} y_{i'j'})}
+\end{align*}
+
+\ss {4.2}
+
+You are given the X's and randomly initialize the Ys. Then, go through the Y's in order and draw from the $P(y_{ij} = 1 \mid Y_{M(i,j)}, x_{ij})$ that we gave above (using the newest values of Y that we just got if necessary). When you have gone through all the Y's you have gone through one "iteration" of Gibbs Sampling. After burning through the burn in samples, Gibbs Sampling guarantees that we converge to $P(Y \mid X)$ eventually.
 
 \end{document}
