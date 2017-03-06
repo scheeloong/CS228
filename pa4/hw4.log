@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  5 MAR 2017 21:41
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  5 MAR 2017 21:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1649,31 +1649,7 @@ Overfull \hbox (40.2828pt too wide) in paragraph at lines 180--180
 [] 
  []
 
-[5]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.201 ... we start the real samples. With the log_
-                                                  neg graph, it is less clea...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.201 ...f our sample might be not quite $P(Y \mid
-                                                   X)$. A touch longer burn ...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (194.86374pt too wide) in paragraph at lines 201--202
-\OT1/lmr/m/n/10 log$[]\OML/lmm/m/it/10 eggraph; itislessclear; sincethegraphhas
-n[]tclearlystartedmixingyetandthebeginningofoursamplemightbenotquite$\OT1/lmr/m
-/n/10 P(Y
- []
-
-<pa4/log_neg.png, id=31, 462.528pt x 346.896pt>
+[5] <pa4/log_neg.png, id=31, 462.528pt x 346.896pt>
 File: pa4/log_neg.png Graphic file (type png)
  <use pa4/log_neg.png>
 Package pdftex.def Info: pa4/log_neg.png used on input line 203.
@@ -1785,7 +1761,7 @@ public/lm/lmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lm
 r7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></u
 sr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on hw4.pdf (11 pages, 417652 bytes).
+Output written on hw4.pdf (11 pages, 416469 bytes).
 PDF statistics:
  118 PDF objects out of 1000 (max. 8388607)
  70 compressed objects within 1 object stream

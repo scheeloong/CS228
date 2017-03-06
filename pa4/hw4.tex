@@ -198,7 +198,7 @@ Aperiodic: You can hit any Y in one "iteration" of Gibbs if you sample the right
 
 \ss {4.3}
 
-All three converge to the same approximate energy: -214000. The chains eventually end up mixing for all three starts, which indicates that our Gibbs sampling is not really getting stuck and is doing the right job. The burn in period for the same and the random seems sufficient, since the burn in samples seem mixed in themselves before we start the real samples. With the log_neg graph, it is less clear, since the graph hasn't clearly started mixing yet and the beginning of our sample might be not quite $P(Y \mid X)$. A touch longer burn in might be safer.
+All three converge to the same approximate energy: -214000. The chains eventually end up mixing for all three starts, which indicates that our Gibbs sampling is not really getting stuck and is doing the right job. The burn in period for the same and the random seems sufficient, since the burn in samples seem mixed in themselves before we start the real samples. With the logneg graph, it is less clear, since the graph hasn't clearly started mixing yet and the beginning of our sample might be not quite $P(Y \mid X)$. A touch longer burn in might be safer.
 
 \pic{Log Neg}{pa4/log_neg.png}
 \pic{Log Same}{pa4/log_same.png}
