@@ -103,7 +103,7 @@ def get_posterior_by_sampling(filename, initialization, logfile, DUMB_SAMPLE, bu
     plt.imshow(Y)
     plt.savefig(str(initialization) + "start.png")
 
-    Z=[]
+    Z={}
 
     with open(logfile, "w+") as file:
 
@@ -136,7 +136,10 @@ def get_posterior_by_sampling(filename, initialization, logfile, DUMB_SAMPLE, bu
             if Y[i][j] == 1:
               count += 1
 
-        Z.append(count)
+        if count in Z:
+          Z[count] += 1
+        else:
+          Z[count] = 0
 
     posterior = posterior / iterations
 
@@ -180,9 +183,6 @@ def denoise_image(filename, initialization, logfile, DUMB_SAMPLE, iterations, bu
     '''
     posterior, Y, Z = \
         get_posterior_by_sampling(filename, initialization, logfile, DUMB_SAMPLE, iterations, burn, eta, beta)
-
-
-    
 
 
     if DUMB_SAMPLE:
@@ -229,6 +229,8 @@ def plot_energy(filename):
     p2, = plt.plot(its_sample, energies_sample, 'b')
     plt.title(filename)
     plt.legend([p1, p2], ["burn in", "sampling"])
+    plt.gca().set_ylim([-216000,-212000])
+    plt.gca().set_xlim([0,1200])
     plt.savefig(filename)
     plt.close()
 
@@ -253,6 +255,13 @@ def convert_to_png(denoised_image, title):
     '''
     save array as a png figure with given title.
     '''
+    fix = np.array(denoised_image)
+    fix[fix==-1] = 0
+    fix[fix==0] = 2
+    fix[fix==1] = 0
+    fix[fix==2] = 1
+    denoised_image = fix.tolist()
+
     plt.imshow(denoised_image, cmap=plt.cm.gray)
     plt.title(title)
     plt.savefig(title + '.png')
@@ -280,8 +289,8 @@ def perform_part_c():
     # TODO #
     ########
     get_posterior_by_sampling('noisy_20.txt', 'same', 'log_same', 0, 100, 1000, 1, 1, True)
-    get_posterior_by_sampling('noisy_20.txt', 'neg', 'log_neg', 0, 100, 1000, 1, 1, True)
-    get_posterior_by_sampling('noisy_20.txt', 'rand', 'log_rand', 0, 100, 1000, 1, 1, True)
+    #get_posterior_by_sampling('noisy_20.txt', 'neg', 'log_neg', 0, 100, 1000, 1, 1, True)
+    #get_posterior_by_sampling('noisy_20.txt', 'rand', 'log_rand', 0, 100, 1000, 1, 1, True)
 
     #### plot out the energy functions
     plot_energy("log_rand")
@@ -307,20 +316,20 @@ def perform_part_d():
     z[z==0] = -10
     z[z==-1] = 0
 
-    print("Noise 10" + str(np.sum(z==x)))
-    print("Noise 20" + str(np.sum(z==y)))
+    print("Noise 10 " + str(np.sum(z==x)))
+    print("Noise 20 " + str(np.sum(z==y)))
     print("Size = " + str(236 * 360))
 
     ####save denoised images and original image to png figures
     convert_to_png(denoised_10, "denoised_10")
-    #convert_to_png(denoised_20, "denoised_20")
+    convert_to_png(denoised_20, "denoised_20")
     convert_to_png(orig_img, "orig_img")
 
 def dumbAlgo(filename):
   X = read_txt_file(filename)
   Y = copy.deepcopy(X)
 
-  for i in range(10):
+  for i in range(50):
     for y in range(len(Y)-1):
       for x in range(len(Y[y])-1):
         if x == 0 or y == 0:
@@ -375,7 +384,7 @@ def perform_part_f():
     plt.show()
 
 if __name__ == "__main__":
-    #perform_part_c()
+    perform_part_c()
     #perform_part_d()
     #perform_part_e()
-    perform_part_f()
+    #perform_part_f()

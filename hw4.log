@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  4 MAR 2017 21:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  5 MAR 2017 21:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1486,7 +1486,35 @@ Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
-) (./hw4.aux)
+) (./hw4.aux
+
+LaTeX Warning: Label `fig:net' multiply defined.
+
+
+LaTeX Warning: Label `fig:net' multiply defined.
+
+
+LaTeX Warning: Label `fig:awesome_image1' multiply defined.
+
+
+LaTeX Warning: Label `fig:awesome_image2' multiply defined.
+
+
+LaTeX Warning: Label `fig:awesome_image3' multiply defined.
+
+
+LaTeX Warning: Label `fig:net' multiply defined.
+
+
+LaTeX Warning: Label `fig:net' multiply defined.
+
+
+LaTeX Warning: Label `fig:net' multiply defined.
+
+
+LaTeX Warning: Label `fig:net' multiply defined.
+
+)
 \openout1 = `hw4.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 32.
@@ -1502,7 +1530,7 @@ LaTeX Font Info:    ... okay on input line 32.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 32.
 LaTeX Font Info:    ... okay on input line 32.
 LaTeX Font Info:    Try loading font information for OT1+lmr on input line 32.
-(/usr/local/texlive/2016/texmf-dist/tex/latex/lm/ot1lmr.fd
+ (/usr/local/texlive/2016/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -1607,48 +1635,160 @@ LaTeX Font Info:    External font `lmex10' loaded for size
  [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Overfull \hbox (73.03445pt too wide) in paragraph at lines 112--112
+Overfull \hbox (22.17715pt too wide) in paragraph at lines 114--114
 [] 
  []
 
 
-Overfull \hbox (91.34064pt too wide) in paragraph at lines 120--120
+Overfull \hbox (40.47392pt too wide) in paragraph at lines 120--120
 [] 
  []
 
-
-Overfull \hbox (40.2828pt too wide) in paragraph at lines 133--133
+[3] [4]
+Overfull \hbox (40.2828pt too wide) in paragraph at lines 180--180
 [] 
  []
 
-[3] [4] (./hw4.aux) ) 
+[5]
+! Missing $ inserted.
+<inserted text> 
+                $
+l.201 ... we start the real samples. With the log_
+                                                  neg graph, it is less clea...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+! Missing $ inserted.
+<inserted text> 
+                $
+l.201 ...f our sample might be not quite $P(Y \mid
+                                                   X)$. A touch longer burn ...
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Overfull \hbox (194.86374pt too wide) in paragraph at lines 201--202
+\OT1/lmr/m/n/10 log$[]\OML/lmm/m/it/10 eggraph; itislessclear; sincethegraphhas
+n[]tclearlystartedmixingyetandthebeginningofoursamplemightbenotquite$\OT1/lmr/m
+/n/10 P(Y
+ []
+
+<pa4/log_neg.png, id=31, 462.528pt x 346.896pt>
+File: pa4/log_neg.png Graphic file (type png)
+ <use pa4/log_neg.png>
+Package pdftex.def Info: pa4/log_neg.png used on input line 203.
+(pdftex.def)             Requested size: 345.0pt x 258.76335pt.
+
+<pa4/log_same.png, id=33, 462.528pt x 346.896pt>
+File: pa4/log_same.png Graphic file (type png)
+ <use pa4/log_same.png>
+Package pdftex.def Info: pa4/log_same.png used on input line 204.
+(pdftex.def)             Requested size: 345.0pt x 258.76335pt.
+
+[6] <pa4/log_rand.png, id=37, 462.528pt x 346.896pt>
+File: pa4/log_rand.png Graphic file (type png)
+ <use pa4/log_rand.png>
+Package pdftex.def Info: pa4/log_rand.png used on input line 205.
+(pdftex.def)             Requested size: 345.0pt x 258.76335pt.
+
+[7 <./pa4/log_neg.png> <./pa4/log_same.png>]
+<pa4/orig.png, id=44, 520.344pt x 341.1144pt>
+File: pa4/orig.png Graphic file (type png)
+ <use pa4/orig.png>
+Package pdftex.def Info: pa4/orig.png used on input line 220.
+(pdftex.def)             Requested size: 110.40253pt x 72.37523pt.
+
+<pa4/noisy_10.png, id=45, 361.35pt x 236.885pt>
+File: pa4/noisy_10.png Graphic file (type png)
+ <use pa4/noisy_10.png>
+Package pdftex.def Info: pa4/noisy_10.png used on input line 224.
+(pdftex.def)             Requested size: 110.40253pt x 72.37451pt.
+
+<pa4/denoised_10.png, id=46, 462.528pt x 346.896pt>
+File: pa4/denoised_10.png Graphic file (type png)
+ <use pa4/denoised_10.png>
+Package pdftex.def Info: pa4/denoised_10.png used on input line 228.
+(pdftex.def)             Requested size: 110.40253pt x 82.80151pt.
+File: pa4/orig.png Graphic file (type png)
+
+<use pa4/orig.png>
+Package pdftex.def Info: pa4/orig.png used on input line 235.
+(pdftex.def)             Requested size: 110.40253pt x 72.37523pt.
+ <pa4/noisy_20.png, id=47, 361.35pt x 236.885pt>
+File: pa4/noisy_20.png Graphic file (type png)
+
+<use pa4/noisy_20.png>
+Package pdftex.def Info: pa4/noisy_20.png used on input line 239.
+(pdftex.def)             Requested size: 110.40253pt x 72.37451pt.
+ <pa4/denoised_20.png, id=48, 462.528pt x 346.896pt>
+File: pa4/denoised_20.png Graphic file (type png)
+
+<use pa4/denoised_20.png>
+Package pdftex.def Info: pa4/denoised_20.png used on input line 243.
+(pdftex.def)             Requested size: 110.40253pt x 82.80151pt.
+ [8 <./pa4/log_rand.png> <./pa4/orig.png (PNG copy)> <./pa4/noisy_10.png (PNG c
+opy)> <./pa4/denoised_10.png>]
+<pa4/denoised_dumb_10.png, id=54, 462.528pt x 346.896pt>
+File: pa4/denoised_dumb_10.png Graphic file (type png)
+
+<use pa4/denoised_dumb_10.png>
+Package pdftex.def Info: pa4/denoised_dumb_10.png used on input line 259.
+(pdftex.def)             Requested size: 345.0pt x 258.76335pt.
+
+<pa4/denoised_dumb_20.png, id=55, 462.528pt x 346.896pt>
+File: pa4/denoised_dumb_20.png Graphic file (type png)
+
+<use pa4/denoised_dumb_20.png>
+Package pdftex.def Info: pa4/denoised_dumb_20.png used on input line 260.
+(pdftex.def)             Requested size: 345.0pt x 258.76335pt.
+ [9 <./pa4/noisy_20.png (PNG copy)> <./pa4/denoised_20.png> <./pa4/denoised_dum
+b_10.png>]
+<pa4/noisy10histo.png, id=61, 462.528pt x 346.896pt>
+File: pa4/noisy10histo.png Graphic file (type png)
+
+<use pa4/noisy10histo.png>
+Package pdftex.def Info: pa4/noisy10histo.png used on input line 266.
+(pdftex.def)             Requested size: 345.0pt x 258.76335pt.
+
+<pa4/noisy20histo.png, id=62, 462.528pt x 346.896pt>
+File: pa4/noisy20histo.png Graphic file (type png)
+
+<use pa4/noisy20histo.png>
+Package pdftex.def Info: pa4/noisy20histo.png used on input line 267.
+(pdftex.def)             Requested size: 345.0pt x 258.76335pt.
+ [10 <./pa4/denoised_dumb_20.png>] [11 <./pa4/noisy10histo.png> <./pa4/noisy20h
+isto.png>] (./hw4.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
+ ) 
 Here is how much of TeX's memory you used:
- 10154 strings out of 493014
- 182853 string characters out of 6133351
- 223015 words of memory out of 5000000
- 13603 multiletter control sequences out of 15000+600000
+ 10223 strings out of 493014
+ 184226 string characters out of 6133351
+ 220088 words of memory out of 5000000
+ 13658 multiletter control sequences out of 15000+600000
  39734 words of font info for 49 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  40i,11n,42p,10397b,275s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-
-rm.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/u
-sr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/t
-exlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/local/texlive/201
-6/texmf-dist/fonts/type1/public/lm/lmbx12.pfb></usr/local/texlive/2016/texmf-di
-st/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/t
-ype1/public/lm/lmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
-c/lm/lmmi5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi7.
-pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texliv
-e/2016/texmf-dist/fonts/type1/public/lm/lmr17.pfb></usr/local/texlive/2016/texm
-f-dist/fonts/type1/public/lm/lmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts
-/type1/public/lm/lmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
-c/lm/lmsy10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy5
-.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
-Output written on hw4.pdf (4 pages, 164379 bytes).
+{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/lo
+cal/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texliv
+e/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2016/texmf-d
+ist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/local/texlive/2016/texmf-dist/fonts/
+type1/public/lm/lmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/lm/lmex10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi
+10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi5.pfb></us
+r/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmmi7.pfb></usr/local/tex
+live/2016/texmf-dist/fonts/type1/public/lm/lmr10.pfb></usr/local/texlive/2016/t
+exmf-dist/fonts/type1/public/lm/lmr12.pfb></usr/local/texlive/2016/texmf-dist/f
+onts/type1/public/lm/lmr17.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
+public/lm/lmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lm
+r7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy10.pfb></u
+sr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb>
+Output written on hw4.pdf (11 pages, 417652 bytes).
 PDF statistics:
- 73 PDF objects out of 1000 (max. 8388607)
- 53 compressed objects within 1 object stream
+ 118 PDF objects out of 1000 (max. 8388607)
+ 70 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 61 words of extra memory for PDF output out of 10000 (max. 10000000)
 
