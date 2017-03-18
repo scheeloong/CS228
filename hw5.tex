@@ -126,7 +126,210 @@ See part 2.A1 for other formulas
 \ss{2.B2}
 
 \begin{align*}
-P(Y_i=1 \mid X_{i,1\dots M}) = P(Y_i=1) \sum_{z_i,1\dots M} \prod_{j=1}^M p(x_{ij} \mid z_{ij}
+& P(Y_i=1 \mid X_{i,1\dots M}) \nl
+\frac{\sum_Z P(Y_i=1, Z, X_{i,1\dots M})}{P(X_{i,1\dots M})} \nl
+\frac{P(Y_i=1) \sum_{z_i,1\dots M} \prod_{j=1}^M p(x_{ij} \mid z_{ij}) * p(z_{ij} \mid y_{ij})}{P(X_{i,1\dots M})} \nl
+\frac{P(Y_i=1) \prod_{j=1}^M \sum_{z_i,1\dots M} p(x_{ij} \mid z_{ij}) * p(z_{ij} \mid y_{ij})}{P(X_{i,1\dots M})} \nl
+\frac{P(Y_i=1) \prod_{j=1}^M \sum_{z_i,1\dots M} p(x_{ij} \mid z_{ij}) * p(z_{ij} \mid y_{ij})}{\sum_y P(Y_i=y) \prod_{j=1}^M \sum_{z_i,1\dots M} p(x_{ij} \mid z_{ij}) * p(z_{ij} \mid y_{ij})}
 \end{align*}
+
+And this last part is polynomial to calculate not exponential because we pushed the sum into the product so we can calculate the Z's independently (we can see they are independent from the Bayesian tree)
+
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+ \hline
+0 & 1.0 & \checkmark \\
+1 & 1.0 & \checkmark \\
+2 & 1.10687543644e-11 &  \\
+3 & 1.0 & \checkmark \\
+4 & 1.79599220851e-16 &  \\
+5 & 1.0 & \checkmark \\
+6 & 1.0 & \checkmark \\
+7 & 1.0 & \checkmark \\
+8 & 1.0 & \checkmark \\
+9 & 1.0 & \checkmark \\
+10 & 4.11317609256e-11 &  \\
+11 & 2.27210526945e-09 &  \\
+12 & 4.73776541146e-15 &  \\
+13 & 1.0 & \checkmark \\
+14 & 0.999999999913 & \checkmark \\
+15 & 6.63072111609e-12 &  \\
+16 & 1.95330106508e-14 &  \\
+17 & 1.0 & \checkmark \\
+18 & 1.0 & \checkmark \\
+19 & 1.0 & \checkmark \\
+20 & 2.58691416694e-16 &  \\
+21 & 1.0 & \checkmark \\
+22 & 0.999999999968 & \checkmark \\
+23 & 2.65859289441e-11 &  \\
+24 & 1.0 & \checkmark \\
+25 & 5.71712529964e-10 &  \\
+26 & 8.61995863343e-15 &  \\
+27 & 3.6809211713e-15 &  \\
+28 & 1.0 & \checkmark \\
+29 & 1.03774348656e-12 &  \\
+30 & 1.0 & \checkmark \\
+31 & 1.0 & \checkmark \\
+32 & 1.0 & \checkmark \\
+33 & 1.16563125037e-11 &  \\
+34 & 1.0 & \checkmark \\
+35 & 2.03129334437e-12 &  \\
+36 & 1.0 & \checkmark \\
+37 & 9.35379152442e-14 &  \\
+38 & 1.79920271419e-13 &  \\
+39 & 1.0 & \checkmark \\
+40 & 1.14212187728e-14 &  \\
+41 & 1.0 & \checkmark \\
+42 & 1.0 & \checkmark \\
+43 & 1.45394221333e-14 &  \\
+44 & 1.0 & \checkmark \\
+45 & 8.28479865838e-10 &  \\
+46 & 0.999999999987 & \checkmark \\
+47 & 4.28728057356e-14 &  \\
+48 & 0.999999999975 & \checkmark \\
+49 & 9.21925967782e-05 &  \\
+ \hline
+\end{tabular}
+\end{center}
+
+Since everything is indexed by i and precinct specific, for this derivation I will just drop the i and only refer to the j index (if necessary).
+
+\begin{align*}
+& P(Z_j=1 \mid X_1\dots M) \nl
+\frac{\sum_{Z_{-j}} \sum_Y P(Y, Z_{1\dots M}, X_{1\dots M})}{P(X_{1\dots M})} \nl
+\frac{\sum_Y P(Y) p(x_{j} \mid z_{j}) * p(z_{j} \mid y_{j}) \sum_{Z_{-j}} \prod_{-j} p(x_{j} \mid z_{j}) * p(z_{j} \mid y_{j})}{P(X_{1\dots M})} \nl
+\frac{\sum_Y P(Y) p(x_{j} \mid z_{j}) * p(z_{j} \mid y_{j})  \prod_{-j} \sum_{Z_{-j}} p(x_{j} \mid z_{j}) * p(z_{j} \mid y_{j})}{P(X_{1\dots M})} \nl
+\frac{\sum_Y P(Y) p(x_{j} \mid z_{j}) * p(z_{j} \mid y_{j})  \prod_{-j} \sum_{Z_{-j}} p(x_{j} \mid z_{j}) * p(z_{j} \mid y_{j})}{\sum_Y P(Y) \prod_{z} \sum_{Z} p(x_{j} \mid z_{j}) * p(z_{j} \mid y_{j})}
+\end{align*}
+
+Where this, like the equation above is polynomial and not exponential as desired because we pushed in the sums.
+
+\pic{Scatter plot with MLE estimation}{pa5/2B_2.png}
+
+\ss{2B3}
+
+For a given precinct
+
+\begin{align*}
+& \sum_D \log P(X_{1\dots M}) = \sum_D \log \sum_Y \sum_Z P(X_{1\dots M}, Y, Z_{1\dots M}) \nl
+\sum_D \log \sum_Y P(Y)\prod_{j=1\dots M} \sum_{Z_j} P(Z_j \mid Y) * P(X_j \mid Z_j) \nl
+\sum_D \log \sum_Y P(Y) \prod_{j=1\dots M} \sum_{Z_j} P(Z_j \mid Y) * P(X_j \mid Z_j)
+\end{align*}
+
+Where
+
+\begin{align*}
+& P(Y=1) = \phi \enter
+P(Z_j \mid Y) = 1(Z=Y)*\lambda + 1(Z \neq Y) * (1-\lambda) \enter
+P(X_j \mid Z_j) = N(X \mid \mu_{Z_j}, \sigma_{Z_j})
+\end{align*}
+
+For $P(Y,Z \mid X)$
+
+\begin{align*}
+& P(Y,Z_{1\dots M} \mid X_1\dots M) \nl
+\frac{P(Y,Z_{1\dots M}, X_1\dots M)}{P( X_1\dots M)} \nl
+\frac{P(Y) \prod_{z} p(x_{j} \mid z_{j}) * p(z_{j} \mid y_{j})}{\sum_Y P(Y) \prod_{z} \sum_{Z} p(x_{j} \mid z_{j}) * p(z_{j} \mid y_{j})}
+\end{align*}
+
+This is computable for similar reasons to the calculations above.
+
+M step:
+
+$\mu, \sigma$ have very similar update equations as before.
+
+\begin{align*}
+& \phi = \frac{\sum_N P(Y_n \mid X_{n,1 \dots M})}{N} \enter
+\lambda = \frac{\sum_{i,j} P(Y_i=0, Z_{ij}=0 \mid X_{n,1 \dots M}) + P(Y_i=1, Z_{ij}=1 \mid X_{n,1 \dots M})}{M*N} \enter
+\end{align*}
+
+\ss{2B4}
+
+\pic{Log likelihood functions}{pa5/2B_4.png}
+
+MLE start: 
+\begin{verbatim}
+{'phi': 0.5600018439242308, 'sigma_1': matrix([[ 0.69145661,  0.13607514],
+[ 0.13607514,  0.29779632]]), 'sigma_0': matrix([[ 0.39440707,  0.35034264],
+[ 0.35034264,  0.84212032]]), 'mu_1': matrix([[ 1.0205135 ,  1.00876657]]),
+'mu_0': matrix([[-1.00910006, -0.96364041]]),
+'pi': 0.57, 'lambda': 0.88486685305626767}
+\end{verbatim}
+
+Random 1 start:
+\begin{verbatim}
+{'phi': 0.4475736376195681, 'sigma_1': matrix([[ 0.87820589,  0.47300381],
+[ 0.47300381,  0.40278968]]), 'sigma_0': matrix([[ 1.98996833,  1.45905695],
+[ 1.45905695,  1.32032964]]), 'mu_1': matrix([[ 0.40618372,  1.03386316]]),
+'mu_0': matrix([[-0.03985263, -0.46872801]]), 'pi': 0.41325060979256356, 'lambda': 0.67641334216442262}
+\end{verbatim}
+
+Random 2 start:
+\begin{verbatim}
+{'phi': 0.9999999480057111, 'sigma_1': matrix([[ 1.57698609,  1.23182323],
+[ 1.23182323,  1.5197048 ]]), 'sigma_0': matrix([[ 1.43657067,  0.35393284],
+[ 0.35393284,  0.08890104]]), 'mu_1': matrix([[ 0.14888773,  0.16911763]]),
+'mu_0': matrix([[ 0.06237175, -0.20027122]]), 'pi': 0.362784982492773,
+'lambda': 0.9740310467641029}
+\end{verbatim}
+
+\ss{2B5}
+
+\begin{center}
+\begin{tabular}{ |c|c|c| } 
+ \hline
+0 & 1.0 & \checkmark \\
+1 & 1.0 & \checkmark \\
+2 & 5.2910748229e-10 &  \\
+3 & 0.999999999922 & \checkmark \\
+4 & 4.10560135051e-13 &  \\
+5 & 0.999999999107 & \checkmark \\
+6 & 0.999999999999 & \checkmark \\
+7 & 0.999999999999 & \checkmark \\
+8 & 1.0 & \checkmark \\
+9 & 1.0 & \checkmark \\
+10 & 1.28149768981e-09 &  \\
+11 & 9.54600552997e-09 &  \\
+12 & 1.76548240647e-12 &  \\
+13 & 0.999999999993 & \checkmark \\
+14 & 0.999999963276 & \checkmark \\
+15 & 1.37480619424e-10 &  \\
+16 & 3.81772639608e-12 &  \\
+17 & 1.0 & \checkmark \\
+18 & 1.0 & \checkmark \\
+19 & 0.999999999999 & \checkmark \\
+20 & 1.83143619726e-13 &  \\
+21 & 1.0 & \checkmark \\
+22 & 0.999999972651 & \checkmark \\
+23 & 1.14540895386e-09 &  \\
+24 & 0.999999999983 & \checkmark \\
+25 & 6.77826060315e-09 &  \\
+26 & 5.0424198135e-13 &  \\
+27 & 3.71326354912e-12 &  \\
+28 & 1.0 & \checkmark \\
+29 & 5.644032623e-11 &  \\
+30 & 1.0 & \checkmark \\
+31 & 1.0 & \checkmark \\
+32 & 0.999999999998 & \checkmark \\
+33 & 6.01396355796e-10 &  \\
+34 & 0.999999999994 & \checkmark \\
+35 & 7.64259227773e-11 &  \\
+36 & 1.0 & \checkmark \\
+37 & 1.7347678872e-11 &  \\
+38 & 2.20629791596e-11 &  \\
+39 & 0.999999999839 & \checkmark \\
+40 & 2.97420189651e-12 &  \\
+41 & 0.999999999934 & \checkmark \\
+42 & 1.0 & \checkmark \\
+43 & 3.23941817644e-12 &  \\
+44 & 0.999999999985 & \checkmark \\
+45 & 5.57364314051e-09 &  \\
+46 & 0.999999989351 & \checkmark \\
+47 & 1.71714723668e-11 &  \\
+48 & 0.999999990859 & \checkmark \\
+49 & 5.53677858465e-05 &  \\
+ \hline
+\end{tabular}
+\end{center}
 
 \end{document}

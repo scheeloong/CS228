@@ -457,8 +457,8 @@ def Y_given_X(X, N, M, params, Yi, YVAL):
     # -------------------------------------------------------------------------
     # TODO: Code to compute posterior_y
 
-    top = MLE_phi
-    bot = 1.0 - MLE_phi
+    top = np.log(MLE_phi)
+    bot = np.log(1.0 - MLE_phi)
 
     for j in range(M):
 
@@ -472,10 +472,10 @@ def Y_given_X(X, N, M, params, Yi, YVAL):
             pxgy += pzgy * pxgz #marginalize the z out
             pxgy_other += pxgz * (1. - pzgy)
 
-        top*=pxgy
-        bot*=pxgy_other
+        top+=np.log(pxgy)
+        bot+=np.log(pxgy_other)
 
-    return top / (top + bot)
+    return math.exp(top) / (math.exp(top) + math.exp(bot))
 
 def YZ_given_X(X, N, M, params, Zi, Zj, ZVAL, YVAL):
     if params == None:
@@ -618,8 +618,8 @@ def estimate_leanings_of_precincts(X, N, M, params=None):
     # -------------------------------------------------------------------------
     # TODO: Code to compute posterior_y
 
-    print N
-    print M
+    #print N
+    #print M
 
     for i in range(N):
         posterior_y[i] = Y_given_X(X, N, M, params, i, 1)
@@ -627,10 +627,15 @@ def estimate_leanings_of_precincts(X, N, M, params=None):
 
     # END_YOUR_CODE
 
-    print posterior_y
+    #print posterior_y
 
     summary = [(i, p, 1 if p>=.5 else 0) for i, p in enumerate(posterior_y)]
-    print summary
+    
+    print "Y ST"
+    for i, num in enumerate(posterior_y):
+        print "%s & %s & %s \\\\" % (i, num, "\checkmark" if num > .5 else "")
+
+    print "DONE"
 
     return summary
 
@@ -1080,6 +1085,8 @@ pi, mu0, mu1, sigma0, sigma1 = MLE_Estimation()
 # plt.xlabel('Iteration')
 # plt.ylabel('Log likelihood')
 # plt.show()
+
+# quit()
 
 #===============================================================================
 # pt B.v
