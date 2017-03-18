@@ -436,6 +436,152 @@ def MLE_of_phi_and_lamdba():
 
     return MLE_phi, MLE_lambda
 
+# one Y
+def Y_given_X(X, N, M, params, Yi, YVAL):
+    if params == None:
+        pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
+        MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
+    else:
+        pi = params['pi']
+        mu_0 = params['mu_0']
+        mu_1 = params['mu_1']
+        sigma_0 = params['sigma_0']
+        sigma_1 = params['sigma_1']
+        MLE_phi = params['phi']
+        MLE_lambda = params['lambda']
+
+    pii = [1.-pi, pi]
+    mu = [mu_0, mu_1]
+    sigma = [sigma_0, sigma_1]
+    posterior_y = [None for i in range(N)] 
+    # -------------------------------------------------------------------------
+    # TODO: Code to compute posterior_y
+
+    top = MLE_phi
+    bot = 1.0 - MLE_phi
+
+    for j in range(M):
+
+        pxgy = 0.0
+        pxgy_other = 0.0
+
+        for z in range(2):
+            pzgy = MLE_lambda if z == YVAL else (1.0-MLE_lambda)
+            pxgz = p_xij_given_zij(X[Yi,j], mu[z], sigma[z])
+
+            pxgy += pzgy * pxgz #marginalize the z out
+            pxgy_other += pxgz * (1. - pzgy)
+
+        top*=pxgy
+        bot*=pxgy_other
+
+    return top / (top + bot)
+
+def YZ_given_X(X, N, M, params, Zi, Zj, ZVAL, YVAL):
+    if params == None:
+        pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
+        MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
+    else:
+        pi = params['pi']
+        mu_0 = params['mu_0']
+        mu_1 = params['mu_1']
+        sigma_0 = params['sigma_0']
+        sigma_1 = params['sigma_1']
+        MLE_phi = params['phi']
+        MLE_lambda = params['lambda']
+
+    pii = [1-pi, pi]
+    mu = [mu_0, mu_1]
+    sigma = [sigma_0, sigma_1]
+    posterior_y = [None for i in range(N)] 
+    # -------------------------------------------------------------------------
+    # TODO: Code to compute posterior_y
+
+    anst = 0.0
+    ansb = 0.0
+
+    for y in range(2):
+
+        top = 1.0
+        bot = 1.0
+        for j in range(M):
+
+            pxgy = 0.0
+            pxgy_other = 0.0
+
+            for z in range(2):
+                pzgy = MLE_lambda if z == y else (1.0-MLE_lambda)
+                pxgz = p_xij_given_zij(X[Zi,j], mu[z], sigma[z])
+
+                pxgy += pzgy * pxgz #marginalize the z out
+
+            if j == Zj:
+                pzgy = MLE_lambda if ZVAL == y else (1.0-MLE_lambda)
+                top*=p_xij_given_zij(X[Zi,j], mu[ZVAL], sigma[ZVAL])*pzgy
+            else:
+                top*=pxgy
+            
+            bot*=pxgy
+
+        if y == YVAL:
+            anst += top
+        ansb += bot
+
+    return anst / ansb
+
+def Z_given_X(X, N, M, params, Zi, Zj, ZVAL):
+    if params == None:
+        pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
+        MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
+    else:
+        pi = params['pi']
+        mu_0 = params['mu_0']
+        mu_1 = params['mu_1']
+        sigma_0 = params['sigma_0']
+        sigma_1 = params['sigma_1']
+        MLE_phi = params['phi']
+        MLE_lambda = params['lambda']
+
+    pii = [1-pi, pi]
+    mu = [mu_0, mu_1]
+    sigma = [sigma_0, sigma_1]
+    posterior_y = [None for i in range(N)] 
+    # -------------------------------------------------------------------------
+    # TODO: Code to compute posterior_y
+
+    anst = 0.0
+    ansb = 0.0
+
+    for y in range(2):
+
+        top = 1.0
+        bot = 1.0
+        for j in range(M):
+
+            pxgy = 0.0
+            pxgy_other = 0.0
+
+            for z in range(2):
+                pzgy = MLE_lambda if z == y else (1.0-MLE_lambda)
+                pxgz = p_xij_given_zij(X[Zi,j], mu[z], sigma[z])
+
+                pxgy += pzgy * pxgz #marginalize the z out
+
+            if j == Zj:
+                pzgy = MLE_lambda if ZVAL == y else (1.0-MLE_lambda)
+                top*=p_xij_given_zij(X[Zi,j], mu[ZVAL], sigma[ZVAL])*pzgy
+            else:
+                top*=pxgy
+            
+            bot*=pxgy
+
+        anst += top
+        ansb += bot
+
+    return anst / ansb
+
+    # END_YOUR_CODE
+
 def estimate_leanings_of_precincts(X, N, M, params=None):
     """Estimate the leanings y_i given data X.
 
@@ -476,30 +622,10 @@ def estimate_leanings_of_precincts(X, N, M, params=None):
     print M
 
     for i in range(N):
-
-        top = MLE_phi
-        bot = 1.0 - MLE_phi
-
-        for j in range(M):
-
-            pxgy = 0.0
-            pxgy_other = 0.0
-
-            for z in range(2):
-                pzgy = MLE_lambda if z == 1 else (1.0-MLE_lambda)
-                pxgz = p_xij_given_zij(X[i,j], mu[z], sigma[z])
-
-                pxgy += pzgy * pxgz #marginalize the z out
-                pxgy_other += pxgz * (1. - pzgy)
-
-            top*=pxgy
-            bot*=pxgy_other
-
-        posterior_y[i] = top / (top + bot)
+        posterior_y[i] = Y_given_X(X, N, M, params, i, 1)
 
 
     # END_YOUR_CODE
-
 
     print posterior_y
 
@@ -507,6 +633,9 @@ def estimate_leanings_of_precincts(X, N, M, params=None):
     print summary
 
     return summary
+
+# one Z and all X
+
 
 def plot_individual_inclinations(X, N, M, params=None):
     """Generate 2d plot of inidivudal statistics in each class.
@@ -521,7 +650,6 @@ def plot_individual_inclinations(X, N, M, params=None):
             params['mu_1'], params['sigma_0'], params['sigma_1'], 
             params['phi'], params['lambda']
     """
-
     if params == None:
         pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
         MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
@@ -534,22 +662,19 @@ def plot_individual_inclinations(X, N, M, params=None):
         MLE_phi = params['phi']
         MLE_lambda = params['lambda']
 
+    phi = [1-MLE_phi, MLE_phi]    
+    lamb = [1-MLE_lambda, MLE_lambda]    
+    mu = [mu_0, mu_1]
+    sigma = [sigma_0, sigma_1]
+
     domain0 = []
     range0 = []
     domain1 = []
     range1 = []
 
     for (i, j), x_ij in X.items():
-        posterior_z = [0.0, 0.0]
 
-        one = pi*p_xij_given_zij(x_ij, mu_1, sigma_1) 
-        zero = (1-pi)*p_xij_given_zij(x_ij, mu_0, sigma_0)
-        bot = one + zero
-
-        posterior_z[0] = zero / bot
-        posterior_z[1] = one / bot
-
-        # END_YOUR_CODE
+        posterior_z = [Z_given_X(X,N,M,params,i,j,0), Z_given_X(X,N,M,params,i,j,1)]
 
         if posterior_z[1] >= posterior_z[0]:
             domain0.append(x_ij[0, 0])
@@ -564,6 +689,137 @@ def plot_individual_inclinations(X, N, M, params=None):
     p2,  = plt.plot(mu_1[0,0], mu_1[0,1], 'kd')
     plt.show()  
 
+# def X_prob(X,N,M,params, Zi):
+#     if params == None:
+#         pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
+#         MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
+#     else:
+#         pi = params['pi']
+#         mu_0 = params['mu_0']
+#         mu_1 = params['mu_1']
+#         sigma_0 = params['sigma_0']
+#         sigma_1 = params['sigma_1']
+#         MLE_phi = params['phi']
+#         MLE_lambda = params['lambda']
+
+#     phi = [1.-MLE_phi, MLE_phi]    
+#     lamb = [1.-MLE_lambda, MLE_lambda]    
+#     mu = [mu_0, mu_1]
+#     sigma = [sigma_0, sigma_1]
+
+#     ans = 0.0
+
+#     for y in range(2):
+#         p = phi[y]
+#         for (i, j), x_ij in X.items():
+#             if i != Zi:
+#                 continue
+
+#             s = 0.0
+#             for z in range(2):
+#                 s+=p_xij_given_zij(x_ij, mu[z], sigma[z])*lamb[y==z]
+#             p*=s
+
+#         ans += p
+
+#     return ans
+
+# def YZ_given_X(X,N,M,params,Zi,Zj,valY,valZ):
+#     if params == None:
+#         pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
+#         MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
+#     else:
+#         pi = params['pi']
+#         mu_0 = params['mu_0']
+#         mu_1 = params['mu_1']
+#         sigma_0 = params['sigma_0']
+#         sigma_1 = params['sigma_1']
+#         MLE_phi = params['phi']
+#         MLE_lambda = params['lambda']
+
+#     phi = [1.-MLE_phi, MLE_phi]    
+#     lamb = [1.-MLE_lambda, MLE_lambda]    
+#     mu = [mu_0, mu_1]
+#     sigma = [sigma_0, sigma_1]
+
+#     ans = 0.0
+
+#     p = phi[valY]
+#     for (i, j), x_ij in X.items():
+#         if i != Zi:
+#             continue
+
+#         if j==Zj:
+#             p*=p_xij_given_zij(x_ij, mu[valZ], sigma[valZ])*lamb[valY==valZ]
+#             continue
+
+#         s = 0.0
+#         for z in range(2):
+#             s+=p_xij_given_zij(x_ij, mu[z], sigma[z])*lamb[valY==z]
+#         p*=s
+
+#     ans += p
+
+#     return ans/X_prob(X,N,M,params, Zi)
+
+# def X_and_Z(X, N, M, params, Zi, Zj, val):
+#     if params == None:
+#         pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
+#         MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
+#     else:
+#         pi = params['pi']
+#         mu_0 = params['mu_0']
+#         mu_1 = params['mu_1']
+#         sigma_0 = params['sigma_0']
+#         sigma_1 = params['sigma_1']
+#         MLE_phi = params['phi']
+#         MLE_lambda = params['lambda']
+
+#     phi = [1-MLE_phi, MLE_phi]    
+#     lamb = [1-MLE_lambda, MLE_lambda]    
+#     mu = [mu_0, mu_1]
+#     sigma = [sigma_0, sigma_1]
+
+#     ans = 0.0
+
+#     for y in range(2):
+#         p = phi[y]
+#         for (i, j), x_ij in X.items():
+#             if i != Zi:
+#                 continue
+
+#             if j==Zj:
+#                 p*=p_xij_given_zij(x_ij, mu[val], sigma[val])*lamb[y==val]
+#                 continue
+
+#             s = 0.0
+
+#             for z in range(2):
+#                 s+=p_xij_given_zij(x_ij, mu[z], sigma[z])*lamb[y==z]
+#             p*=s
+
+#         ans += p
+
+#     return ans
+
+# def Z_given_X(X,N,M,params,i,j,val):
+#     #xcxc
+#     print Y_given_X(X, N, M, params, 0, 1) + Y_given_X(X, N, M, params, 0, 0)
+#     print "MATCH"
+#     print REAL_Z_given_X(X, N, M, params, 0, 0, 0) 
+#     print REAL_Z_given_X(X, N, M, params, 0, 0, 1)
+#     print "MATCH"
+
+
+
+
+#    # Z = [X_and_Z(X,N,M,params,i,j,0), X_and_Z(X,N,M,params,i,j,1)]
+
+#     print Y
+#     print X_prob(X,N,M,params,i)
+#     assert (Z[0] + Z[1]) == X_prob(X,N,M,params,i)
+
+#     return Z[val]/(Z[0] + Z[1])
 
 def perform_em(X, N, M, init_params, max_iters=50, eps=1e-2):
     """Estimate Model B paramters using EM
@@ -605,7 +861,13 @@ def perform_em(X, N, M, init_params, max_iters=50, eps=1e-2):
         # -------------------------------------------------------------------------
         # TODO: Code to compute ll
 
-        pass
+        for key in X:
+
+            xg0 = p_xij_given_zij(X[key], mu_0, sigma_0)
+            xg1 = p_xij_given_zij(X[key], mu_1, sigma_1)
+
+            ll += np.log((1.-phi)*lambd*xg0 + (1.-phi)*(1-lambd)*xg1 + (phi)*(1.-lambd)*xg0 + (phi)*lambd*xg1)
+        
 
         # END_YOUR_CODE
             
@@ -625,7 +887,12 @@ def perform_em(X, N, M, init_params, max_iters=50, eps=1e-2):
         # -------------------------------------------------------------------------
         # TODO: Code for the E step
 
-        pass
+        Z = {}
+        Y = {}
+
+        for key in X:
+            Z[key] = Z_given_X(X,N,M,init_params,key[0],key[1], 1)
+            Y[key] = Y_given_X(X, N, M, init_params, key[0], 1)
 
         # END_YOUR_CODE
 
@@ -640,7 +907,33 @@ def perform_em(X, N, M, init_params, max_iters=50, eps=1e-2):
         # TODO: Code for the M step
         # You need to compute the above variables
 
-        pass
+        tot = 0.0
+        tot0 = 0.0
+        tot1 = 0.0
+        for key in X:
+            phi += Y[key]
+            tot += 1.0
+
+            lambd += YZ_given_X(X,N,M,init_params,key[0],key[1],0,0) + YZ_given_X(X,N,M,init_params,key[0],key[1],1,1)
+
+            tot0 += 1.-Z[key]
+            tot1 += Z[key]
+            mu_0 = np.add(mu_0, (1.-Z[key])*X[key])
+            mu_1 = np.add(mu_1, (Z[key])*X[key])
+
+        phi /= tot
+        lambd /= tot
+        mu_0 /= tot0
+        mu_1 /= tot1
+
+        for key in X:
+            inside_0 = np.subtract(X[key], mu_0)
+            inside_1 = np.subtract(X[key], mu_1)
+            sigma_0 += (1.-Z[key]) * np.outer(inside_0, inside_0)
+            sigma_1 += Z[key] * np.outer(inside_1, inside_1)
+        
+        sigma_0/=tot0
+        sigma_1/=tot1
 
         # END_YOUR_CODE
 
@@ -660,6 +953,9 @@ def perform_em(X, N, M, init_params, max_iters=50, eps=1e-2):
     params['lambda'] = lambd
     params['phi'] = phi
 
+    print log_likelihood
+    print "STOP"
+
     return params, log_likelihood
 
 #===============================================================================
@@ -671,11 +967,13 @@ def perform_em(X, N, M, init_params, max_iters=50, eps=1e-2):
 
 #START HERE
 
-# pi, mu0, mu1, sigma0, sigma1 = MLE_Estimation()
+pi, mu0, mu1, sigma0, sigma1 = MLE_Estimation()
 
 # colorprint("MLE estimates for PA part A.i:", "teal")
 # colorprint("\tpi: %s\n\tmu_0: %s\n\tmu_1: %s\n\tsigma_0: %s\n\tsigma_1: %s"
 #     %(pi, mu0, mu1, sigma0, sigma1), "red")
+
+# quit()
 
 # #==============================================================================    
 # # pt A.ii
@@ -724,63 +1022,64 @@ def perform_em(X, N, M, init_params, max_iters=50, eps=1e-2):
 #===============================================================================
 # pt. B.i
 
-MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
+# MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
 
-colorprint("MLE estimates for PA part B.i:", "teal")
-colorprint("\tMLE phi: %s\n\tMLE lambda: %s\n"%(MLE_phi, MLE_lambda), 'red')
+# colorprint("MLE estimates for PA part B.i:", "teal")
+# colorprint("\tMLE phi: %s\n\tMLE lambda: %s\n"%(MLE_phi, MLE_lambda), 'red')
 
-#===============================================================================
-# pt B.ii
+# quit()
+# #===============================================================================
+# # pt B.ii
 
-X, N, M = read_unlabeled_matrix(UNLABELED_FILE)    
-estimate_leanings_of_precincts(X, N, M, params=None)
-plot_individual_inclinations(X, N, M, params=None)
+# X, N, M = read_unlabeled_matrix(UNLABELED_FILE)    
+# estimate_leanings_of_precincts(X, N, M, params=None)
+# plot_individual_inclinations(X, N, M, params=None)
 
 #===============================================================================
 # pt B.iv
 
-def random_covariance():
-    P = np.matrix(np.random.randn(2,2))
-    D = np.matrix(np.diag(np.random.rand(2) * 0.5 + 1.0))
-    return P*D*P.T
-X, N, M = read_unlabeled_matrix(UNLABELED_FILE)
-# initialization strategy 1
-params = {}
-pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
-MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
-params['pi'] = pi
-params['mu_0'] = mu_0
-params['mu_1'] = mu_1
-params['sigma_0'] = sigma_0
-params['sigma_1'] = sigma_1
-params['phi'] = MLE_phi
-params['lambda'] = MLE_lambda
-params, log_likelihood = perform_em(X, N, M, params)
-print log_likelihood
-params_list = [params]
-log_likelihood_list = [log_likelihood]
+# def random_covariance():
+#     P = np.matrix(np.random.randn(2,2))
+#     D = np.matrix(np.diag(np.random.rand(2) * 0.5 + 1.0))
+#     return P*D*P.T
+# X, N, M = read_unlabeled_matrix(UNLABELED_FILE)
+# # initialization strategy 1
+# params = {}
+# pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
+# MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
+# params['pi'] = pi
+# params['mu_0'] = mu_0
+# params['mu_1'] = mu_1
+# params['sigma_0'] = sigma_0
+# params['sigma_1'] = sigma_1
+# params['phi'] = MLE_phi
+# params['lambda'] = MLE_lambda
+# params, log_likelihood = perform_em(X, N, M, params)
+# print log_likelihood
+# params_list = [params]
+# log_likelihood_list = [log_likelihood]
 
-for _ in range(2):
-    params = {}
-    params['pi'] = np.random.rand()
-    params['mu_0'] = np.random.randn(1,2)
-    params['mu_1'] = np.random.randn(1,2)
-    params['sigma_0'] = random_covariance()
-    params['sigma_1'] = random_covariance()
-    params['phi'] = np.random.rand()
-    params['lambda'] = np.random.rand()
-    params, log_likelihood = perform_em(X, N, M, params)
-    params_list.append(params)
-    log_likelihood_list.append(log_likelihood)
+# for _ in range(2):
+#     params = {}
+#     params['pi'] = np.random.rand()
+#     params['mu_0'] = np.random.randn(1,2)
+#     params['mu_1'] = np.random.randn(1,2)
+#     params['sigma_0'] = random_covariance()
+#     params['sigma_1'] = random_covariance()
+#     params['phi'] = np.random.rand()
+#     params['lambda'] = np.random.rand()
+#     params, log_likelihood = perform_em(X, N, M, params)
+#     params_list.append(params)
+#     log_likelihood_list.append(log_likelihood)
 
-plt.figure()
-for i, params in enumerate(params_list):
-    print params
-    plt.plot(log_likelihood_list[i])
-plt.legend(['MLE initialization', 'Random initialization', 'Random initialization'], loc=4)
-plt.xlabel('Iteration')
-plt.ylabel('Log likelihood')
-plt.show()
+# plt.figure()
+# for i, params in enumerate(params_list):
+#     print params
+#     plt.plot(log_likelihood_list[i])
+# plt.legend(['MLE initialization', 'Random initialization', 'Random initialization'], loc=4)
+# plt.xlabel('Iteration')
+# plt.ylabel('Log likelihood')
+# plt.show()
 
 #===============================================================================
 # pt B.v

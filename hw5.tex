@@ -4,6 +4,7 @@
 \def\ind{\!\perp\!\!\!\perp}
 \def\m{\mid}
 \def\nl{ \\ = \sp &}
+\def\enter{ \\ \sp &}
 \newcommand{\eq}[1]{\begin{align*}&{#1}\end{align*}}
 \renewcommand{\ss}[1]{\subsection*{#1}}
 \renewcommand{\P}[1]{\s{Problem #1}}
@@ -38,13 +39,12 @@ Note that from the hint, we can see that the Dirichlet distribution is a distrib
 
 \begin{align*}
 & P(X[M+1] = x^i \mid D) \nl
-\sum_{\theta}P(X[M+1] = x^i \mid \theta) * P(\theta \mid D) \nl
-\sum_{\theta} \theta_i* P(\theta \mid D) \nl
-E[\theta_i \mid D] = \frac{\alpha_i + M[i]}{M + \alpha}
+\int_{\theta}P(X[M+1] = x^i \mid \theta) * P(\theta \mid D) d\theta \nl
+\int_{\theta} \theta_i* P(\theta \mid D) d\theta\nl
+E_{\theta \mid D} [\theta_i] = \frac{\alpha_i + M[i]}{M + \alpha}
 \end{align*}
 
-As proven in lecture. TODO GO TO OFFICE HOURS
-
+with the last inequality taken straight from lecture.
 \ss{1.2}
 
 \begin{align*}
@@ -52,18 +52,81 @@ As proven in lecture. TODO GO TO OFFICE HOURS
 P(X[M+1] = x^i \mid D) * P(X[M+2] = x^i \mid  X[M+1] = x^j, D)
 \end{align*}
 
+But notice, the second part, is just augmenting the data set by one more example. Thus, our probabilities are just 
+\begin{align*}
+& \frac{\alpha_i + M[i]}{M + \alpha} * \frac{\alpha_j + M[j] + 1(i=j)}{M + \alpha + 1}
+\end{align*}
+
 \ss{1.3}
 
 \begin{align*}
-& P(X[M+1] = x^i, X[M+2] = x^j \mid D) \\ & - P(X[M+1] = x^i \mid D) * P(X[M+2] = x^i \mid  D) \nl
-\frac{\alpha_i + M[i]}{M + \alpha} * \frac{\alpha_j + M[j] + 1(i=j)}{M + \alpha + 1} - \frac{\alpha_i + M[i]}{M + \alpha} * \frac{\alpha_j + M[j]}{M + \alpha} \nl
-\frac{\alpha_i + M[i]}{M + \alpha} (\frac{\alpha_j + M[j] + 1(i=j)}{M + \alpha + 1} - \frac{\alpha_j + M[j]}{M + \alpha}) \nl
-\frac{\alpha_i + M[i]}{M + \alpha} (\frac{(M+\alpha) \alpha_j + (M+\alpha)*M[j] + (M+\alpha)*1(i=j)}{(M + \alpha + 1)*(M+\alpha)} - \frac{(M + \alpha + 1)\alpha_j + (M + \alpha + 1)*M[j]}{(M + \alpha)(M + \alpha + 1)}) \nl
-\frac{\alpha_i + M[i]}{M + \alpha} (\frac{  -\alpha_j - M[j] + (M+\alpha)*1(i=j)}{(M + \alpha + 1)*(M+\alpha)}) \nl
+& P(X[M+1] = x^i, X[M+2] = x^j \mid D) \\ & / P(X[M+1] = x^i \mid D) * P(X[M+2] = x^i \mid  D) \nl
+(\frac{\alpha_i + M[i]}{M + \alpha} * \frac{\alpha_j + M[j] + 1(i=j)}{M + \alpha + 1}) / (\frac{\alpha_i + M[i]}{M + \alpha} * \frac{\alpha_j + M[j]}{M + \alpha}) \nl
+\frac{(\alpha_j + M[j] + 1(i=j))}{ (\alpha_j + M[j])} * \frac{(M + \alpha + 1))}{(M+\alpha)} \nl
 \end{align*}
 
 The difference here is if you update your Dirichlet counts after you sample the M+1th sample when you do exact inference and don't if you do approximate. Thus, if your data set is large, then not updating doesn't matter, but if it is small it might make a large difference.
 
-The numerator can at most asymptotically approach $M^2$, while the denominator is assymptotically $M^3$, thus the error asymptotically decreases linearly as M increases.
+With the function above, both factors of the product clearly have the +1 become irrelevant as M goes to infinity and dwarfs it.
+
+\P 2
+
+Let T be the total number of examples.
+
+\begin{align*}
+& \pi = \sum_{ij}\frac{1[Z_{ij}=1]}{T} = 0.57 \enter
+\mu_0 = \sum_{ij}\frac{1[Z_{ij}=0] * X_{ij}}{1[Z=0]} = [-0.99437209, -1.11730233] \enter
+\mu_1 = \sum_{ij}\frac{1[Z_{ij}=1] * X_{ij}}{1[Z=1]} = [ 1.04922807,  0.98085965] \enter
+\sigma_0 = \sum_{ij}\frac{1[Z_{ij}=0] * (X_{ij} - \mu_0) (X_{ij} - \mu_0) ^ T}{1[Z=0]} = [[ 0.30811884,  0.28553768]
+ [ 0.28553768 , 0.81346635]] \enter
+\sigma_1 = \sum_{ij}\frac{1[Z_{ij}=1] * (X_{ij} - \mu_1) (X_{ij} - \mu_1) ^ T}{1[Z=1]} = [[ 0.77827888 , 0.19683566]
+ [ 0.19683566,  0.24996938]] \enter
+\end{align*}
+
+\ss{2.A2}
+
+\pic{Log likelihood functions}{pa5/2_2.png}
+
+MLE start: 
+\begin{verbatim}
+{'pi': 0.58616150703175707, 'sigma_1': matrix([[ 0.72112418,  0.14499114],
+[ 0.14499114,  0.30825171]]), 'sigma_0': matrix([[ 0.36212646,  0.31082931],
+[ 0.31082931,  0.75836101]]),
+'mu_1': matrix([[ 0.98729587,  0.99618266]]),
+'mu_0': matrix([[-1.04406391, -1.02551825]])}
+\end{verbatim}
+
+Random 1 start:
+\begin{verbatim}
+{'pi': 0.51535490062201894, 'sigma_1': matrix([[ 0.5953022 ,  0.54367732],
+[ 0.54367732,  1.01903159]]), 'sigma_0': matrix([[ 0.6061935 ,  0.05204946],
+[ 0.05204946,  0.24784284]]), \\ 'mu_1': matrix([[-0.80990003, -0.72964472]]),
+'mu_0': matrix([[ 1.16379378,  1.10503744]])}
+\end{verbatim}
+
+Random 2 start:
+\begin{verbatim}
+{'pi': 0.18461282486659261, 'sigma_1': matrix([[ 1.66246823,  1.30203827],
+[ 1.30203827,  1.3425169 ]]), 'sigma_0': matrix([[ 1.31417998,  1.17278467],
+[ 1.17278467,  1.51739247]]), \\ 'mu_1': matrix([[ 1.07480467,  0.22227733]]),
+'mu_0': matrix([[-0.06350569,  0.14531717]])}
+\end{verbatim}
+
+One of the random starts seems to have found approximately the same maxima that MLE found, but the other one ended up in a slightly worse local minimum.
+
+\ss{2.B1}
+
+See part 2.A1 for other formulas
+
+\begin{align*}
+& \phi = \sum_{i}\frac{1[Y_{i}=1]}{N} = 0.6 \enter
+\lambda = \sum_{ij} \frac{1[Z_{ij}=Y_i]}{M*N} = .93
+\end{align*}
+
+\ss{2.B2}
+
+\begin{align*}
+P(Y_i=1 \mid X_{i,1\dots M}) = P(Y_i=1) \sum_{z_i,1\dots M} \prod_{j=1}^M p(x_{ij} \mid z_{ij}
+\end{align*}
 
 \end{document}
