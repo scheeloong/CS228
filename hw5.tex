@@ -44,7 +44,7 @@ Note that from the hint, we can see that the Dirichlet distribution is a distrib
 E_{\theta \mid D} [\theta_i] = \frac{\alpha_i + M[i]}{M + \alpha}
 \end{align*}
 
-with the last inequality taken straight from lecture.
+with the last equality taken straight from lecture notes and naturally results from the conjugate distribution with Dirichelet.
 \ss{1.2}
 
 \begin{align*}
@@ -121,6 +121,22 @@ See part 2.A1 for other formulas
 \begin{align*}
 & \phi = \sum_{i}\frac{1[Y_{i}=1]}{N} = 0.6 \enter
 \lambda = \sum_{ij} \frac{1[Z_{ij}=Y_i]}{M*N} = .93
+\end{align*}
+
+For a given precinct
+
+\begin{align*}
+& \sum_D \log P(X_{1\dots M}) = \sum_D \log \sum_Y \sum_Z P(X_{1\dots M}, Y, Z_{1\dots M}) \nl
+\sum_D \log \sum_Y P(Y)\prod_{j=1\dots M} \sum_{Z_j} P(Z_j \mid Y) * P(X_j \mid Z_j) \nl
+\sum_D \log \sum_Y P(Y) \prod_{j=1\dots M} \sum_{Z_j} P(Z_j \mid Y) * P(X_j \mid Z_j)
+\end{align*}
+
+Where
+
+\begin{align*}
+& P(Y=1) = \phi \enter
+P(Z_j \mid Y) = 1(Z=Y)*\lambda + 1(Z \neq Y) * (1-\lambda) \enter
+P(X_j \mid Z_j) = N(X \mid \mu_{Z_j}, \sigma_{Z_j})
 \end{align*}
 
 \ss{2.B2}
@@ -208,11 +224,11 @@ Where this, like the equation above is polynomial and not exponential as desired
 
 \ss{2B3}
 
+Log likelihood:
+
 For a given precinct
 
 \begin{align*}
-& \sum_D \log P(X_{1\dots M}) = \sum_D \log \sum_Y \sum_Z P(X_{1\dots M}, Y, Z_{1\dots M}) \nl
-\sum_D \log \sum_Y P(Y)\prod_{j=1\dots M} \sum_{Z_j} P(Z_j \mid Y) * P(X_j \mid Z_j) \nl
 \sum_D \log \sum_Y P(Y) \prod_{j=1\dots M} \sum_{Z_j} P(Z_j \mid Y) * P(X_j \mid Z_j)
 \end{align*}
 
@@ -236,7 +252,7 @@ This is computable for similar reasons to the calculations above.
 
 M step:
 
-$\mu, \sigma$ have very similar update equations as before.
+$\mu, \sigma$ have very similar update equations as part A.
 
 \begin{align*}
 & \phi = \frac{\sum_N P(Y_n \mid X_{n,1 \dots M})}{N} \enter

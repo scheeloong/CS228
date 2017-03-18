@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  17 MAR 2017 21:53
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  17 MAR 2017 22:54
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1493,6 +1493,9 @@ LaTeX Warning: Label `fig:net' multiply defined.
 
 LaTeX Warning: Label `fig:net' multiply defined.
 
+
+LaTeX Warning: Label `fig:net' multiply defined.
+
 )
 \openout1 = `hw5.aux'.
 
@@ -1681,76 +1684,76 @@ Overfull \hbox (64.49881pt too wide) in paragraph at lines 113--113
 File: pa5/2B_2.png Graphic file (type png)
 
 <use pa5/2B_2.png>
-Package pdftex.def Info: pa5/2B_2.png used on input line 207.
+Package pdftex.def Info: pa5/2B_2.png used on input line 223.
 (pdftex.def)             Requested size: 345.0pt x 258.76335pt.
  [6 <./pa5/2B_2.png>]
 <pa5/2B_4.png, id=40, 462.528pt x 346.896pt>
 File: pa5/2B_4.png Graphic file (type png)
  <use pa5/2B_4.png>
-Package pdftex.def Info: pa5/2B_4.png used on input line 248.
+Package pdftex.def Info: pa5/2B_4.png used on input line 264.
 (pdftex.def)             Requested size: 345.0pt x 258.76335pt.
  [7]
-Overfull \hbox (43.49887pt too wide) in paragraph at lines 257--257
+Overfull \hbox (43.49887pt too wide) in paragraph at lines 273--273
 []\OT1/lmtt/m/n/10 {'phi': 0.5600018439242308, 'sigma_1': matrix([[ 0.69145661,
   0.13607514],[] 
  []
 
 
-Overfull \hbox (53.99884pt too wide) in paragraph at lines 257--257
+Overfull \hbox (53.99884pt too wide) in paragraph at lines 273--273
 []\OT1/lmtt/m/n/10 [ 0.13607514,  0.29779632]]), 'sigma_0': matrix([[ 0.3944070
 7,  0.35034264],[] 
  []
 
 
-Overfull \hbox (48.74886pt too wide) in paragraph at lines 257--257
+Overfull \hbox (48.74886pt too wide) in paragraph at lines 273--273
 []\OT1/lmtt/m/n/10 [ 0.35034264,  0.84212032]]), 'mu_1': matrix([[ 1.0205135 , 
  1.00876657]]),[] 
  []
 
 
-Overfull \hbox (43.49887pt too wide) in paragraph at lines 265--265
+Overfull \hbox (43.49887pt too wide) in paragraph at lines 281--281
 []\OT1/lmtt/m/n/10 {'phi': 0.4475736376195681, 'sigma_1': matrix([[ 0.87820589,
   0.47300381],[] 
  []
 
 
-Overfull \hbox (53.99884pt too wide) in paragraph at lines 265--265
+Overfull \hbox (53.99884pt too wide) in paragraph at lines 281--281
 []\OT1/lmtt/m/n/10 [ 0.47300381,  0.40278968]]), 'sigma_0': matrix([[ 1.9899683
 3,  1.45905695],[] 
  []
 
 
-Overfull \hbox (48.74886pt too wide) in paragraph at lines 265--265
+Overfull \hbox (48.74886pt too wide) in paragraph at lines 281--281
 []\OT1/lmtt/m/n/10 [ 1.45905695,  1.32032964]]), 'mu_1': matrix([[ 0.40618372, 
  1.03386316]]),[] 
  []
 
 
-Overfull \hbox (195.74843pt too wide) in paragraph at lines 265--265
+Overfull \hbox (195.74843pt too wide) in paragraph at lines 281--281
 []\OT1/lmtt/m/n/10 'mu_0': matrix([[-0.03985263, -0.46872801]]), 'pi': 0.413250
 60979256356, 'lambda': 0.67641334216442262}[] 
  []
 
 
-Overfull \hbox (43.49887pt too wide) in paragraph at lines 274--274
+Overfull \hbox (43.49887pt too wide) in paragraph at lines 290--290
 []\OT1/lmtt/m/n/10 {'phi': 0.9999999480057111, 'sigma_1': matrix([[ 1.57698609,
   1.23182323],[] 
  []
 
 
-Overfull \hbox (53.99884pt too wide) in paragraph at lines 274--274
+Overfull \hbox (53.99884pt too wide) in paragraph at lines 290--290
 []\OT1/lmtt/m/n/10 [ 1.23182323,  1.5197048 ]]), 'sigma_0': matrix([[ 1.4365706
 7,  0.35393284],[] 
  []
 
 
-Overfull \hbox (48.74886pt too wide) in paragraph at lines 274--274
+Overfull \hbox (48.74886pt too wide) in paragraph at lines 290--290
 []\OT1/lmtt/m/n/10 [ 0.35393284,  0.08890104]]), 'mu_1': matrix([[ 0.14888773, 
  0.16911763]]),[] 
  []
 
 
-Overfull \hbox (22.49893pt too wide) in paragraph at lines 274--274
+Overfull \hbox (22.49893pt too wide) in paragraph at lines 290--290
 []\OT1/lmtt/m/n/10 'mu_0': matrix([[ 0.06237175, -0.20027122]]), 'pi': 0.362784
 982492773,[] 
  []
@@ -1763,7 +1766,7 @@ Overfull \vbox (21.25822pt too high) has occurred while \output is active []
 File: pa5/scatter_last.png Graphic file (type png)
 
 <use pa5/scatter_last.png>
-Package pdftex.def Info: pa5/scatter_last.png used on input line 335.
+Package pdftex.def Info: pa5/scatter_last.png used on input line 351.
 (pdftex.def)             Requested size: 345.0pt x 258.76335pt.
  [10 <./pa5/scatter_last.png>] (./hw5.aux)
 
@@ -1773,7 +1776,7 @@ LaTeX Warning: There were multiply-defined labels.
 Here is how much of TeX's memory you used:
  10220 strings out of 493014
  183897 string characters out of 6133351
- 226069 words of memory out of 5000000
+ 229070 words of memory out of 5000000
  13659 multiletter control sequences out of 15000+600000
  40045 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1795,7 +1798,7 @@ sr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy5.pfb></usr/local/te
 xlive/2016/texmf-dist/fonts/type1/public/lm/lmsy7.pfb></usr/local/texlive/2016/
 texmf-dist/fonts/type1/public/lm/lmtt10.pfb></usr/local/texlive/2016/texmf-dist
 /fonts/type1/public/amsfonts/symbols/msam10.pfb>
-Output written on hw5.pdf (10 pages, 403718 bytes).
+Output written on hw5.pdf (10 pages, 404271 bytes).
 PDF statistics:
  107 PDF objects out of 1000 (max. 8388607)
  72 compressed objects within 1 object stream

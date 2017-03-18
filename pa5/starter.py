@@ -945,7 +945,7 @@ def perform_em(X, N, M, init_params, max_iters=50, eps=1e-2):
         # Check for convergence
         this_ll = compute_log_likelihood(mu_0, mu_1, sigma_0, sigma_1, phi, lambd)
         log_likelihood.append(this_ll)
-        if np.abs((this_ll - log_likelihood[-2]) / log_likelihood[-2]) < eps:
+        if len(log_likelihood) > 3 and np.abs((log_likelihood[-2] - log_likelihood[-3]) / log_likelihood[-3]) < eps:
             break
 
     # pack the parameters and return
@@ -1043,50 +1043,50 @@ pi, mu0, mu1, sigma0, sigma1 = MLE_Estimation()
 #===============================================================================
 # pt B.iv
 
-# def random_covariance():
-#     P = np.matrix(np.random.randn(2,2))
-#     D = np.matrix(np.diag(np.random.rand(2) * 0.5 + 1.0))
-#     return P*D*P.T
-# X, N, M = read_unlabeled_matrix(UNLABELED_FILE)
-# # initialization strategy 1
-# params = {}
-# pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
-# MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
-# params['pi'] = pi
-# params['mu_0'] = mu_0
-# params['mu_1'] = mu_1
-# params['sigma_0'] = sigma_0
-# params['sigma_1'] = sigma_1
-# params['phi'] = MLE_phi
-# params['lambda'] = MLE_lambda
-# params, log_likelihood = perform_em(X, N, M, params)
-# print log_likelihood
-# params_list = [params]
-# log_likelihood_list = [log_likelihood]
+def random_covariance():
+    P = np.matrix(np.random.randn(2,2))
+    D = np.matrix(np.diag(np.random.rand(2) * 0.5 + 1.0))
+    return P*D*P.T
+X, N, M = read_unlabeled_matrix(UNLABELED_FILE)
+# initialization strategy 1
+params = {}
+pi, mu_0, mu_1, sigma_0, sigma_1 = MLE_Estimation()    
+MLE_phi, MLE_lambda = MLE_of_phi_and_lamdba()
+params['pi'] = pi
+params['mu_0'] = mu_0
+params['mu_1'] = mu_1
+params['sigma_0'] = sigma_0
+params['sigma_1'] = sigma_1
+params['phi'] = MLE_phi
+params['lambda'] = MLE_lambda
+params, log_likelihood = perform_em(X, N, M, params)
+print log_likelihood
+params_list = [params]
+log_likelihood_list = [log_likelihood]
 
-# for _ in range(2):
-#     params = {}
-#     params['pi'] = np.random.rand()
-#     params['mu_0'] = np.random.randn(1,2)
-#     params['mu_1'] = np.random.randn(1,2)
-#     params['sigma_0'] = random_covariance()
-#     params['sigma_1'] = random_covariance()
-#     params['phi'] = np.random.rand()
-#     params['lambda'] = np.random.rand()
-#     params, log_likelihood = perform_em(X, N, M, params)
-#     params_list.append(params)
-#     log_likelihood_list.append(log_likelihood)
+for _ in range(2):
+    params = {}
+    params['pi'] = np.random.rand()
+    params['mu_0'] = np.random.randn(1,2)
+    params['mu_1'] = np.random.randn(1,2)
+    params['sigma_0'] = random_covariance()
+    params['sigma_1'] = random_covariance()
+    params['phi'] = np.random.rand()
+    params['lambda'] = np.random.rand()
+    params, log_likelihood = perform_em(X, N, M, params)
+    params_list.append(params)
+    log_likelihood_list.append(log_likelihood)
 
-# plt.figure()
-# for i, params in enumerate(params_list):
-#     print params
-#     plt.plot(log_likelihood_list[i])
-# plt.legend(['MLE initialization', 'Random initialization', 'Random initialization'], loc=4)
-# plt.xlabel('Iteration')
-# plt.ylabel('Log likelihood')
-# plt.show()
+plt.figure()
+for i, params in enumerate(params_list):
+    print params
+    plt.plot(log_likelihood_list[i])
+plt.legend(['MLE initialization', 'Random initialization', 'Random initialization'], loc=4)
+plt.xlabel('Iteration')
+plt.ylabel('Log likelihood')
+plt.show()
 
-# quit()
+quit()
 
 #===============================================================================
 # pt B.v
